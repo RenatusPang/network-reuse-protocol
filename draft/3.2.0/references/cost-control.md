@@ -13,7 +13,7 @@ Use the first option that passes the task's gates:
 5. **Metered API.** Use after a budget, cap, and owner are approved.
 6. **New paid service.** Requires explicit approval scoped to the purchase.
 
-The protocol itself is Markdown. It adds no runtime cost.
+The protocol itself is Markdown. It creates no new paid-service dependency, but loading its rules and references may consume context, plan quota, or API usage. No comparable measurement exists yet, so no savings percentage is claimed.
 
 ## Route by task difficulty
 

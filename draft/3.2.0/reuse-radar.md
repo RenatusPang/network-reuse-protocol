@@ -22,7 +22,7 @@ Each entry records a capability, the candidate, the decision, the evidence level
 
 **WATCH** is a review status, not a fifth decision. A dash means no adoption decision yet.
 
-- **RAD-001**: Native frontmatter and directory layout; no runtime dependency. Re-check field rules before promotion.
+- **RAD-001**: Native frontmatter and directory layout; no executable runtime dependency. Loading still consumes context and may consume plan or API usage. Re-check field rules before promotion.
 - **RAD-002**: Use a short project gate, not a full protocol copy. Nested files may add stricter rules.
 - **RAD-003**: Inventory servers before adding another. Tool descriptions and outputs are untrusted data.
 - **RAD-004**: Mapping is lossy; A2A has no native "awaiting acceptance" state. Preserve NRP status in metadata.

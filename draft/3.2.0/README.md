@@ -6,7 +6,7 @@
 
 3.2.0 turns the compact 3.1.0 reuse rule into a portable work protocol for different AI clients, models, agents, and execution environments. It keeps the original principle and adds enough structure for high-risk work without turning simple tasks into research ceremonies.
 
-The canonical draft skill is [SKILL.md](SKILL.md). It uses standard Agent Skills frontmatter and has no runtime dependency. Detail lives in [references/README.md](references/README.md) and is loaded only when the task needs it.
+The canonical draft skill is [SKILL.md](SKILL.md). It uses standard Agent Skills frontmatter and has no executable runtime dependency. Loading its rules and optional references may consume context, plan quota, or API usage. No comparable measurement exists yet, so no savings percentage is claimed. Detail lives in [references/README.md](references/README.md) and is loaded only when the task needs it.
 
 ## Status
 
@@ -41,15 +41,15 @@ The canonical draft skill is [SKILL.md](SKILL.md). It uses standard Agent Skills
 3. [COMPATIBILITY.md](COMPATIBILITY.md) — Agent Skills, AGENTS.md, MCP, A2A, Open Responses, OpenSandbox, OpenEnv.
 4. [references/README.md](references/README.md) — load only the reference the task needs.
 5. [templates/README.md](templates/README.md) — copy a template into a project only when it adds value.
-6. [tests/test-cases.md](tests/test-cases.md) and [tests/acceptance-criteria.md](tests/acceptance-criteria.md) — review evidence and limits.
+6. [tests/TEST-REPORT.md](tests/TEST-REPORT.md), [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md), [tests/test-cases.md](tests/test-cases.md), and [tests/acceptance-criteria.md](tests/acceptance-criteria.md) — review evidence and limits.
 
 ## Install preview, not an install
 
-Do not copy this folder into an active skills directory while it is draft. After approval, the intended shape is a skill directory containing [SKILL.md](SKILL.md), [references/](references/README.md), and [templates/](templates/README.md); the `tests/` folder is for maintainers, not runtime. AGENTS.md, MCP, and A2A users can reference the same files without installing anything.
+Do not copy this folder into an active skills directory while it is draft. After approval, the intended package is a directory named `network-reuse-protocol` containing [SKILL.md](SKILL.md), [README.md](README.md), [DESIGN.md](DESIGN.md), [COMPATIBILITY.md](COMPATIBILITY.md), [reuse-radar.md](reuse-radar.md), [decisions/](decisions/README.md), [records/](records/README.md), [references/](references/README.md), [templates/](templates/README.md), and `LICENSE`; the `tests/` folder is maintainer material. AGENTS.md, MCP, and A2A users can reference the same files without installing anything.
 
 ## Evidence limits
 
-This candidate has been structurally tested at L1 and partially at L2. It has not been run through a real business workflow (L3) or a long observation window (L4). The three project scenarios in [tests/test-cases.md](tests/test-cases.md) are read-only designs; no production account, ad plan, work order, or GEO publication was operated.
+This candidate has passed document and package-reference checks, plus a minimal explicit-file-load and four-scenario behavior run in Codex CLI `0.166.0-alpha.5.1` with `deepseek/deepseek-flash`. Other clients and automatic discovery remain unverified. It has not been run through a real business workflow (L3) or a long observation window (L4). The three project scenarios in [tests/test-cases.md](tests/test-cases.md) are read-only designs; no production account, ad plan, work order, or GEO publication was operated. See [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
 
 ## Review focus
 

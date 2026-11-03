@@ -121,7 +121,7 @@ Use [../templates/validation-report.md](../templates/validation-report.md). Mini
 The 3.2.0 draft is expected to claim:
 
 - L1: structural, link, frontmatter, template, scenario, and diff checks.
-- L2: the test script runs from a clean Node process; no runtime is required.
+- L2: the test script runs from a clean Node process; it has no executable package dependency. Loading the protocol still consumes context and may consume plan or API usage.
 - L3: not tested; the three scenarios are read-only designs.
 - L4: not claimable; no observation window.
 

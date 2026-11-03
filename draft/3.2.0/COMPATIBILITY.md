@@ -1,6 +1,6 @@
 # Compatibility — Network Reuse Protocol 3.2.0
 
-> **DRAFT / NOT ACTIVE.** Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol.
+> **DRAFT / NOT ACTIVE.** Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
 
 ## Why this file exists
 
@@ -18,7 +18,7 @@ Sources below were checked on 2026-11-03. A source link is not a security audit.
 | Status | Meaning |
 | --- | --- |
 | Native | The repository layout already follows the standard |
-| Adapter | A short mapping or snippet is needed; no runtime dependency |
+| Adapter | A short mapping or snippet is needed; no executable runtime dependency |
 | Optional | Useful in some environments; not required |
 | Watch | Early or in-review; do not depend on it yet |
 
@@ -42,18 +42,25 @@ The draft frontmatter uses the fields defined by the Agent Skills specification:
 - `description`: non-empty and at most 1024 characters.
 - `license`: MIT.
 - `compatibility`: short environment note; at most 500 characters.
-- `metadata`: version, status, active flag, display name, and update date as string values.
+- `metadata`: version, status, active flag, display name, and update date as string values. These fields are informational unless the client explicitly supports them.
 
-The draft is nested under `draft/3.2.0/`. A loader that discovers skills by directory name will not activate it from that location. After approval, the install shape is:
+The draft is nested under `draft/3.2.0/`. Its location, `metadata.active: "false"`, and DRAFT banner are status markers only. A client may ignore them, scan the nested folder, or load it; behavior depends on the client. Verify discovery and loading in the target client. After approval, the intended package shape is:
 
     <skills-dir>/network-reuse-protocol/
       SKILL.md
+      README.md
+      DESIGN.md
+      COMPATIBILITY.md
+      reuse-radar.md
+      decisions/
+      records/
       references/
       templates/
+      LICENSE
 
 `tests/` is maintainer material and does not need to ship to runtime.
 
-**Limit:** frontmatter validity does not prove that every client honors `metadata` or progressive disclosure. Test the target client after approval.
+**Limit:** frontmatter validity does not prove that every client honors `metadata`, status markers, or progressive disclosure. `metadata.active` is not a universal kill switch. Test the target client after approval.
 
 ## AGENTS.md
 

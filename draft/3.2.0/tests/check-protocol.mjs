@@ -15,7 +15,16 @@ const changelog = resolve(repoRoot, 'CHANGELOG.md');
 
 let passed = 0;
 let failed = 0;
+let skipped = 0;
 const failures = [];
+const skips = [];
+
+class Skip extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'Skip';
+  }
+}
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -41,16 +50,36 @@ function walk(dir) {
 }
 
 function check(name, fn) {
-  const number = passed + failed + 1;
+  const number = passed + failed + skipped + 1;
   try {
     const detail = fn();
     passed += 1;
-    console.log('ok ' + number + ' - ' + name + (detail ? ' [' + detail + ']' : ''));
+    console.log('PASS ' + number + ' - ' + name + (detail ? ' [' + detail + ']' : ''));
   } catch (error) {
+    if (error instanceof Skip) {
+      skipped += 1;
+      skips.push(name + ': ' + error.message);
+      console.log('SKIP ' + number + ' - ' + name + ' :: ' + error.message);
+      return;
+    }
     failed += 1;
     failures.push(name + ': ' + error.message);
-    console.log('not ok ' + number + ' - ' + name + ' :: ' + error.message);
+    console.log('FAIL ' + number + ' - ' + name + ' :: ' + error.message);
   }
+}
+
+function git(args) {
+  return execFileSync('git', args, {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    timeout: 30000,
+    stdio: ['ignore', 'pipe', 'pipe']
+  }).trim();
+}
+
+function unavailable(action, error) {
+  const firstLine = String(error.message || error).split('\n')[0].trim();
+  return new Skip(action + ' unavailable: ' + firstLine);
 }
 
 const markdownFiles = () => walk(draftDir).filter((p) => p.endsWith('.md'));
@@ -137,7 +166,11 @@ const required = [
   'draft/3.2.0/tests/test-cases.md',
   'draft/3.2.0/tests/acceptance-criteria.md',
   'draft/3.2.0/tests/check-protocol.mjs',
-  'draft/3.2.0/tests/TEST-REPORT.md'
+  'draft/3.2.0/tests/TEST-REPORT.md',
+  'draft/3.2.0/tests/BEHAVIOR-EVIDENCE.md',
+  'draft/3.2.0/tests/build-package.mjs',
+  'draft/3.2.0/tests/check-package.mjs',
+  'draft/3.2.0/tests/test-missing-git.mjs'
 ];
 
 const rootHashes = {
@@ -145,6 +178,8 @@ const rootHashes = {
   'README.md': '76c2d045f5491fb6c783e36db533485b557e5b67ea72c6c0ad755c2069dc5a60',
   'LICENSE': '7f18f7e3fcc2dc4f6d052ddb64a1ba303e9b56092d2166c5c107a814a2eb52aa'
 };
+
+const baselineMain = '705dacfcc281ab5b28267be2ca54e7f49171ba31';
 
 check('required directory and file structure', () => {
   const missing = required.filter((p) => !existsSync(resolve(repoRoot, p)));
@@ -354,7 +389,7 @@ check('no package manager or service dependency was added', () => {
   const forbidden = ['package.json', 'package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'requirements.txt', 'pyproject.toml', 'Cargo.toml'];
   const found = forbidden.filter((p) => existsSync(resolve(repoRoot, p)));
   assert(found.length === 0, 'unexpected dependency files: ' + found.join(', '));
-  return 'Markdown and one Node test only';
+  return 'Markdown and dependency-free Node tests only';
 });
 
 check('draft status never claims active', () => {
@@ -367,20 +402,35 @@ check('draft status never claims active', () => {
   return 'no active claims';
 });
 
-check('local main is not modified', () => {
+check('remote main is independently verified', () => {
+  let output;
   try {
-    const main = execFileSync('git', ['rev-parse', 'main'], { cwd: repoRoot, encoding: 'utf8' }).trim();
-    const origin = execFileSync('git', ['rev-parse', 'origin/main'], { cwd: repoRoot, encoding: 'utf8' }).trim();
-    assert(main === origin, 'local main ' + main + ' != origin/main ' + origin);
-    const changed = execFileSync('git', ['diff', '--name-only', 'main..HEAD', '--', 'SKILL.md', 'README.md', 'LICENSE'], { cwd: repoRoot, encoding: 'utf8' }).trim();
-    assert(changed === '', 'root files differ from main: ' + changed);
-    return 'main=' + main.slice(0, 7);
+    output = git(['ls-remote', 'origin', 'refs/heads/main']);
   } catch (error) {
-    if (/not a git repository|unknown revision|ambiguous argument|Not a valid object name/i.test(error.message)) {
-      return 'skipped: git main unavailable';
-    }
-    throw error;
+    throw unavailable('remote main check', error);
   }
+  const line = output.split('\n').find((item) => item.trim());
+  assert(line, 'remote returned no main ref');
+  const [sha, ref] = line.trim().split(/\s+/);
+  assert(ref === 'refs/heads/main', 'unexpected ref: ' + ref);
+  assert(sha === baselineMain, 'remote main ' + sha + ' != release baseline ' + baselineMain);
+  return 'remote main=' + sha.slice(0, 7);
+});
+
+check('local main is not modified', () => {
+  let main;
+  let origin;
+  let changed;
+  try {
+    main = git(['rev-parse', 'main']);
+    origin = git(['rev-parse', 'origin/main']);
+    changed = git(['diff', '--name-only', 'main..HEAD', '--', 'SKILL.md', 'README.md', 'LICENSE']);
+  } catch (error) {
+    throw unavailable('local Git check', error);
+  }
+  assert(main === origin, 'local main ' + main + ' != origin/main ' + origin);
+  assert(changed === '', 'root files differ from main: ' + changed);
+  return 'local main=origin/main=' + main.slice(0, 7);
 });
 
 check('draft README links every capability reference', () => {
@@ -411,10 +461,17 @@ check('acceptance criteria covers the twelve engineering tests', () => {
 });
 
 console.log('');
-console.log('SUMMARY: ' + passed + ' passed, ' + failed + ' failed');
+console.log('SUMMARY: ' + passed + ' passed, ' + failed + ' failed, ' + skipped + ' skipped');
 if (failed) {
   console.log('FAILURES:');
   for (const failure of failures) console.log('- ' + failure);
+  console.log('RESULT: FAIL');
   process.exit(1);
+}
+if (skipped) {
+  console.log('SKIPPED:');
+  for (const item of skips) console.log('- ' + item);
+  console.log('RESULT: INCOMPLETE (skipped checks did not run; not all checks passed)');
+  process.exit(2);
 }
 console.log('RESULT: PASS (L1 structural; L2 local execution)');

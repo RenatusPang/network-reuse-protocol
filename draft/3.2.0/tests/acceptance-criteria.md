@@ -24,7 +24,7 @@
 - [ ] 3.2.0 lives under [../](../README.md) and is marked **DRAFT / NOT ACTIVE**.
 - [ ] Root `../../SKILL.md` remains 3.1.0, status active.
 - [ ] Root `../../README.md` and `../../LICENSE` are byte-identical to `705dacf`.
-- [ ] [../SKILL.md](../SKILL.md) uses standard Agent Skills frontmatter and no runtime dependency.
+- [ ] [../SKILL.md](../SKILL.md) uses standard Agent Skills frontmatter and no executable runtime dependency; loading may consume context or plan/API usage.
 - [ ] The body stays within 100 lines and 5 KB after frontmatter.
 - [ ] All eight capabilities are mapped in [../README.md](../README.md) and [../DESIGN.md](../DESIGN.md).
 - [ ] All seven statuses and ten handoff fields appear in the reference and template.

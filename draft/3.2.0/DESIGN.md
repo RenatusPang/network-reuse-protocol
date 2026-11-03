@@ -25,7 +25,7 @@ The gap is not "more steps". The gap is missing substrate:
 3. **Hard gates before scores.** License, security, environment, authority, privacy, and budget are pass/fail. A high score cannot rescue a failed gate.
 4. **Primary evidence over summaries.** Vendor claims, star counts, and other AI summaries are leads. Source, version, license, issue history, and first-hand tests decide.
 5. **Progressive disclosure.** The active body stays small. Detail is loaded from [references/](references/README.md) only when the task needs it; templates are copied only when they reduce work.
-6. **No dependency by default.** The protocol is Markdown. Standards are adapters, not prerequisites.
+6. **No executable dependency by default.** The protocol is Markdown; standards are adapters, not prerequisites. Loading it still consumes context and may consume plan or API usage.
 7. **One writer per shared state.** Parallel agents can research, build, and verify, but shared files, accounts, and external state have one owner.
 8. **Measured cost only.** Actual usage can be reported. Estimates are labeled. Savings are not invented.
 9. **Validation by level.** L1 file/code, L2 runtime/interface, L3 real business flow, and L4 long-term stability are separate claims.
@@ -139,7 +139,7 @@ The draft itself can claim L1 and partial L2. It cannot claim L3 or L4 because n
 
 - Root [../../SKILL.md](../../SKILL.md) remains 3.1.0, status active.
 - Root [../../README.md](../../README.md) and [../../LICENSE](../../LICENSE) remain unchanged.
-- 3.2.0 lives under `draft/3.2.0/` and is not discoverable as an active skill by location.
+- 3.2.0 lives under `draft/3.2.0/`. Its path, `metadata.active: "false"`, and DRAFT banner are status markers, not a client-enforced load control; some clients may scan or load it. Verify the target client.
 - The 3.1.0 three steps remain the Quick path in 3.2.0.
 - There is no automatic migration, installation, or promotion.
 - A future promotion is a separate reviewed change that updates the root skill, changelog, and release metadata together.
@@ -178,7 +178,7 @@ The draft itself can claim L1 and partial L2. It cannot claim L3 or L4 because n
 ## Acceptance gates for this draft
 
 - All required files exist and every relative link resolves.
-- The draft skill uses valid Agent Skills frontmatter and has no runtime dependency.
+- The draft skill uses valid Agent Skills frontmatter and has no executable runtime dependency; loading may consume context or plan/API usage.
 - 3.1.0 root files are byte-identical to `705dacf`.
 - All eight capabilities, seven statuses, ten handoff fields, and four validation levels are present.
 - All three project scenarios are covered without production operations.

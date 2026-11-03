@@ -8,25 +8,27 @@
 | --- | --- | --- |
 | R0 read-only | search, read files, inspect a dashboard, run a non-mutating check | allowed inside the task scope |
 | R1 local reversible write | edit a draft, create a local test, add a document | proceed with a backup or version control |
-| R2 external reversible write | create a private draft, update a non-production shared doc | explicit authorization for that action |
-| R3 high-impact or irreversible | publish, deploy, pay, change credentials, delete, submit production, change ad budget | explicit, specific approval plus backup, rollback, and verification |
+| R2 external reversible write | create a private draft, update a non-production shared doc | authorization covering the action |
+| R3 high-impact or irreversible | publish, deploy, pay, change credentials, delete, submit production, change ad budget | authorization covering the action; backup, rollback, and verification |
 
 The class is about impact, not tool category. A "read" API that triggers a charge is R3. A local script that deletes data is R3.
 
 ## Authorization
 
-Authorization must state:
+Authorization states:
 
 - the action;
 - the target account, system, or path;
 - the scope and limits;
-- the time window or expiry;
+- the validity: one action, or ongoing until revoked;
 - the approver;
 - the evidence required after the action.
 
-Research results, a previous approval for a different action, or an agent's confidence are not authorization. If ownership is ambiguous, stop.
+An explicit ongoing authorization from the user remains valid until revoked. If the goal, action, scope, and constraints are unchanged, do not ask again and do not invent an expiry, quantity cap, or extra confirmation step. Reconfirm when the scope expands, a new fee appears, or the material risk changes. Platform permission, safety, login, MFA, and account-ownership checks remain in force.
 
-Paid ad accounts are read-only by default. Creating, editing, enabling, pausing, deleting, or changing a budget needs explicit approval for that specific action. This draft does not operate any ad account.
+Research results, authorization for a different scope, or an agent's confidence are not authorization. If ownership is ambiguous, stop.
+
+Paid ad accounts are read-only by default. Creating, editing, enabling, pausing, deleting, or changing a budget needs authorization covering the action; an unchanged standing authorization is sufficient. This draft does not operate any ad account.
 
 ## Prompt injection
 
