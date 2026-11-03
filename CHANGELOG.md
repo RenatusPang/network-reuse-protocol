@@ -1,10 +1,10 @@
 # Changelog
 
-All notable changes to Network Reuse Protocol are recorded here. Draft entries are not releases.
+All notable changes to Network Reuse Protocol are recorded here. A changelog entry records the change; it does not by itself prove installation or business effect.
 
-## 3.2.0 — DRAFT / NOT ACTIVE (2026-11-03)
+## 3.2.0 — 2026-11-03
 
-Candidate branch: `draft/nrp-3.2.0`. Review package: [draft/3.2.0/README.md](draft/3.2.0/README.md).
+Promoted from the independently reviewed candidate on branch `draft/nrp-3.2.0`. The formal release is tagged `v3.2.0`; the rollback baseline is annotated tag `v3.1.0` at `705dacf`.
 
 - Adds a risk-proportional Universal AI Work Protocol while keeping the 3.1.0 three-step default for simple work.
 - Adds bounded global search, evidence levels, hard gates, a weighted score, and four decisions: REUSE / COMPOSE / ADAPT / BUILD.
@@ -15,7 +15,8 @@ Candidate branch: `draft/nrp-3.2.0`. Review package: [draft/3.2.0/README.md](dra
 - Adds L1–L4 acceptance and an explicit rule that passing code is not business success.
 - Adds reuse-radar, decisions, references, task records, and expiry review guidance.
 - Adds three read-only project scenarios and a dependency-free structural test.
-- Keeps [SKILL.md](SKILL.md), [README.md](README.md), and [LICENSE](LICENSE) byte-identical to 3.1.0. No production system is touched.
+- Preserves the pinned 3.1.0 release by tag and keeps the 3.1.0 three-step path as Quick mode. No production system is touched.
+- Records promotion, package, client-load, behavior, and unresolved compatibility evidence separately in [tests/TEST-REPORT.md](tests/TEST-REPORT.md) and [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
 
 ## 3.1.0 — 2026-10-27
 
@@ -27,6 +28,6 @@ Commit `705dacf` corrected the copyright holder in [LICENSE](LICENSE) to Renatus
 
 ## Version policy
 
-- `draft/` holds unapproved candidates and is never active by location alone.
-- A release becomes active only after review, approval, and a separate promotion change.
-- Changelog entries describe what changed; they do not prove installation, adoption, or business effect.
+- A release becomes active only after review, approval, a promotion change, and release checks.
+- A rollback baseline is an annotated Git tag; `v3.1.0` is the rollback tag for 3.2.0.
+- Changelog entries describe what changed; they do not prove installation, adoption, savings, or business effect.

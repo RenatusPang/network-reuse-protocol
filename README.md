@@ -1,49 +1,73 @@
-# Network Reuse Protocol · 全网复用模式
+# Network Reuse Protocol 3.2.0 · 全网复用模式
 
-A small, opinionated protocol for AI agents (Claude Code, Codex, Cursor, DSH, …) that keeps them from rebuilding what already exists — **without** turning "research" into an endless ceremony.
+**Active release.** 3.2.0 is a portable work protocol for choosing proven solutions before building. It keeps the compact 3.1.0 reuse rule as the default for simple work and adds bounded discipline for high-risk, multi-agent, cost-sensitive, and long-lived work.
 
-> One principle: solve the problem with approaches others have already validated.
-> Don't rebuild the wheel. Don't run endless searches just to look diligent.
+The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter and has no executable runtime dependency. Loading its rules and optional references may consume context, plan quota, or API usage. No comparable measurement exists, so no savings percentage is claimed.
 
-## Why
+## Status
 
-Agents love to re-derive everything: re-search, re-test, re-report. The result is bloated context, slow delivery and solutions that ignore existing work. This protocol replaces that with three steps and a single decision.
+| Item | State |
+| --- | --- |
+| Version | 3.2.0 |
+| Channel | active |
+| Supersedes | 3.1.0 |
+| Rollback | annotated Git tag `v3.1.0` at `705dacf` |
+| License | MIT |
+| Release tag | `v3.2.0` |
+| Production systems touched | none |
 
-## Install
+## Eight capabilities
 
-Drop the folder into your agent's skills directory, e.g.
+| Capability | Where it lives | Default depth |
+| --- | --- | --- |
+| Global mature-solution search | [references/global-search.md](references/global-search.md) | Standard and high-risk |
+| Mature-solution decision | [references/evidence-and-scoring.md](references/evidence-and-scoring.md) | Any choice between options |
+| Resource inventory and duplicate-install prevention | [references/resource-inventory.md](references/resource-inventory.md) | Before any install |
+| AI cost control | [references/cost-control.md](references/cost-control.md) | When tokens, APIs, or paid tools are involved |
+| Multi-AI collaboration | [references/multi-agent-handoff.md](references/multi-agent-handoff.md) | Only when work is actually split |
+| Execution and security governance | [references/security-governance.md](references/security-governance.md) | Always; depth follows risk |
+| Independent L1–L4 acceptance | [references/validation.md](references/validation.md) | L1/L2 always; L3/L4 when claimed |
+| Long-term knowledge retention | [references/knowledge-retention.md](references/knowledge-retention.md) | Only for durable, reusable results |
 
-```text
-~/.claude/skills/network-reuse-protocol/SKILL.md
-~/.agents/skills/network-reuse-protocol/SKILL.md   # DSH
-~/.codex/skills/network-reuse-protocol/SKILL.md    # Codex
-```
+## Read order
 
-Or paste `SKILL.md` into your system prompt / project instructions.
+1. [SKILL.md](SKILL.md) — the active protocol body.
+2. [DESIGN.md](DESIGN.md) — design rationale, modes, and tradeoffs.
+3. [COMPATIBILITY.md](COMPATIBILITY.md) — Agent Skills, AGENTS.md, MCP, A2A, Open Responses, OpenSandbox, and OpenEnv mappings.
+4. [references/README.md](references/README.md) — load only the reference the task needs.
+5. [templates/README.md](templates/README.md) — copy a template into a project only when it reduces work.
+6. [tests/TEST-REPORT.md](tests/TEST-REPORT.md), [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md), [tests/test-cases.md](tests/test-cases.md), and [tests/acceptance-criteria.md](tests/acceptance-criteria.md) — verification evidence and limits.
 
-## The three steps
+## Installation
 
-1. **Look for existing work first** — your own results, `reuse-radar.md`, the project, then GitHub / official docs. Search by **concept**, not only by package name.
-2. **Judge quickly** — version, license, maintenance, security, known failures; **compare adoption cost vs build cost** side by side.
-3. **Return one decision: reuse / compose / adapt / build.**
+Install a directory named `network-reuse-protocol`; the directory name must match the Skill `name`. The complete package contains:
 
-Depth follows risk. Simple tasks get no ceremony; irreversible or money-touching ones get primary evidence, backups and rollback.
+    network-reuse-protocol/
+      SKILL.md
+      README.md
+      DESIGN.md
+      COMPATIBILITY.md
+      reuse-radar.md
+      CHANGELOG.md
+      LICENSE
+      decisions/
+      records/
+      references/
+      templates/
+      tests/
 
-## Non-negotiables
+The repository-only file `tests/build-package.mjs` is a maintainer builder and is not included in the installed package. No MCP server, SDK, runtime, plugin, or paid service is required. AGENTS.md, MCP, and A2A users can reference the same Markdown files without installing the Skill.
 
-Read-only research · no writing to external accounts without explicit approval · no fabrication · no bypassing CAPTCHAs or risk controls · stricter rule wins on conflict.
+## Verification status
 
-## What this is not
+Document structure, isolated package references, and the active version are checked by [tests/check-protocol.mjs](tests/check-protocol.mjs) and [tests/check-package.mjs](tests/check-package.mjs). A target-client load check uses the actual installed path and records the client and model. Those are separate claims from behavior, business success, and long-term stability.
 
-- Not a research-report generator.
-- Not a mandate for multi-AI, bilingual, six-step workflows.
-- Not a replacement for your own project rules — it defers to the stricter one.
+The four short behavior scenarios were run against the reviewed candidate in Codex CLI `0.166.0-alpha.5.1` with `deepseek/deepseek-flash`; they were not rerun for promotion. Other clients, automatic enforcement, real business flow (L3), long-term stability (L4), and savings remain unverified. The three project scenarios in [tests/test-cases.md](tests/test-cases.md) are read-only designs; no production account, ad plan, work order, or GEO publication was operated. See [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
 
-## Credits
+## Rollback
 
-- [github-build-or-reuse](https://github.com/ghspain/github-build-or-reuse) — the USE / CONTRIBUTE / FORK / BUILD decision framing.
-- [Anthropic Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) — progressive disclosure / size budgeting.
+The complete 3.1.0 release is preserved by annotated tag `v3.1.0` at `705dacf`. To roll back, check out that tag and restore the pre-promotion local Skill snapshot. Restart the client and confirm 3.1.0 from the canonical path. If a remote withdrawal is required, revert the promotion commit; do not rewrite shared `main` history.
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).
