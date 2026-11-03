@@ -82,6 +82,8 @@ Rules:
 
 ## Anti-duplication
 
+The same rule applies to ChatGPT, MUSE, Codex, DSH, and any future agent: one task record is the source of truth.
+
 1. Search existing task records and decision records before opening a new task.
 2. Claim a question by task ID before research.
 3. One researcher per question; a second agent may verify, not re-run the same search.
