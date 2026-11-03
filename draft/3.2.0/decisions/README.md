@@ -18,6 +18,6 @@ Use [../templates/decision-record.md](../templates/decision-record.md).
 
 | Date | ID | Decision | Status | Review by |
 | --- | --- | --- | --- | --- |
-| 2026-11-03 | NRP-DEC-320-001 | Keep 3.1.0 active; publish 3.2.0 as a nested draft | proposed | 2026-12-03 |
+| 2026-11-03 | NRP-DEC-320-001 | [Keep 3.1.0 active; publish 3.2.0 as a nested draft](2026-11-03-keep-3.1.0-active.md) | proposed | 2026-12-03 |
 
 The index is intentionally short. Add a row only for a durable decision.
