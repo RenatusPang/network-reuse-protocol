@@ -1,6 +1,6 @@
 # Resource inventory
 
-> **Active 3.2.0 template.** Keep only resources that affect decisions.
+> **Active 3.3.0 template.** Keep only resources that affect decisions.
 
 ## Scope
 

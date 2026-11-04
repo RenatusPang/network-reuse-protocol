@@ -1,6 +1,6 @@
 # Task record
 
-> **Active 3.2.0 template.** Keep the audit trail short and linked.
+> **Active 3.3.0 template.** Keep the audit trail short and linked.
 
 ## Summary
 

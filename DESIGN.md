@@ -1,6 +1,6 @@
-# Design — Network Reuse Protocol 3.2.0
+# Design — Network Reuse Protocol 3.3.0
 
-> **3.2.0 design baseline, retained for the 3.3.0 candidate.** This document records the released design. The only candidate delta is search quality in [references/global-search.md](references/global-search.md); see [CHANGELOG.md](CHANGELOG.md). This branch is DRAFT / NOT ACTIVE.
+> **Active 3.3.0 release.** The 3.2.0 design below is retained. The targeted delta is search quality in [references/global-search.md](references/global-search.md); see [CHANGELOG.md](CHANGELOG.md). Rollback baseline: `v3.2.0`.
 
 ## Problem
 

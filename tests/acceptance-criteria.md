@@ -1,6 +1,6 @@
-# Acceptance criteria — Network Reuse Protocol 3.3.0 candidate
+# Acceptance criteria — Network Reuse Protocol 3.3.0
 
-> **DRAFT / NOT ACTIVE.** Results and exact counts are recorded in [TEST-REPORT.md](TEST-REPORT.md). Passing these checks supports L1 and named L2 claims only.
+> **Active release criteria.** Results and exact counts are recorded in [TEST-REPORT.md](TEST-REPORT.md). Passing these checks supports L1 and named L2 claims only.
 
 ## Engineering tests
 
@@ -21,7 +21,7 @@
 
 ## Structural acceptance
 
-- [x] [../SKILL.md](../SKILL.md) is draft 3.3.0 with standard Agent Skills frontmatter and no executable runtime dependency.
+- [x] [../SKILL.md](../SKILL.md) is active 3.3.0 with standard Agent Skills frontmatter and no executable runtime dependency.
 - [x] The body stays within 100 lines and 5 KB after frontmatter.
 - [x] All eight capabilities are mapped in [../README.md](../README.md) and [../DESIGN.md](../DESIGN.md).
 - [x] All seven statuses and ten handoff fields appear in the reference and template.
@@ -39,14 +39,14 @@
 - [x] Remote-main and local-Git evidence are recorded separately.
 - [x] Missing-Git behavior is covered by a regression test; skipped checks cannot produce an all-pass report.
 - [x] The 3.2.0 baseline tag and commit are recorded.
-- [x] The branch is recorded; the immutable candidate commit is the PR head (or `git rev-parse HEAD` in this checkout).
+- [x] The branch is recorded; the immutable release commit is the PR merge (or `git rev-parse HEAD` in this checkout).
 - [x] Limitations are stated: other clients, L3, L4, and savings are not verified.
 - [x] The three project scenarios were not executed against production.
 
-## Candidate review gate
+## Release gate
 
 1. Relevant structure, package and regression checks pass; report PASS/FAIL/SKIP separately.
-2. Main and `v3.2.0` stay at `da1a716`; no 3.3.0 release tag or active installation.
+2. Preserve `v3.2.0` at `da1a716`; publish the owner-approved 3.3.0 commit on main and tag it `v3.3.0`. Update only the intended Codex Skill path.
 3. Record actual candidate reads and tool traces for S1–S5 in [BEHAVIOR-EVIDENCE.md](BEHAVIOR-EVIDENCE.md). Report additional observed rule violations separately even when a scenario's core expectation passes.
 4. S1 must include actual GitHub retrieval, useful category terms, direct-fit candidates, environment/inventory checks and a decision. Known names need not all win, but a retrieved direct-fit peer cannot be silently ignored in favor of a general tool.
 5. S2/S5 must preserve named-source requirements and label access limits and alternative evidence.
@@ -54,7 +54,7 @@
 7. Reviewers assess observed behavior separately from static assertions. A finite test cannot prove every AI follows the protocol.
 8. No new services, runtime dependencies, model changes, permission expiry, or business operations.
 
-Passing candidate checks permits PR review. Formal publication still needs explicit user approval; no new approval step is imposed on ordinary protocol tasks.
+The owner explicitly authorized publication after the candidate report disclosed the efficiency failure and X-access limit. Preserve those results without relabeling them PASS. No new approval step is imposed on ordinary protocol tasks.
 
 ## L1–L4 acceptance
 
@@ -78,4 +78,4 @@ Passing candidate checks permits PR review. Formal publication still needs expli
 ## Sign-off
 
 Candidate implementation and tests: recorded in [TEST-REPORT.md](TEST-REPORT.md).
-Independent PR acceptance and formal release: pending; not claimed by these tests.
+Formal release: owner-authorized. This is not a claim of new independent behavioral acceptance. Release-only checks and the installed-path read are recorded separately.

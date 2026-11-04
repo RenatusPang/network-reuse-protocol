@@ -1,3 +1,31 @@
+# Release report — 3.3.0
+
+> **Active release, owner-authorized on 2026-11-04.** Promotes candidate `26db7d8` from PR #1. The existing efficiency FAIL and X-access SKIP remain disclosed; the owner authorized publication after receiving that report.
+
+## Release-only verification
+
+Version/status, README, CHANGELOG, complete reference headers, promotion decision, and release checks are synchronized. Search behavior is unchanged from the reviewed candidate except the release banner; no new research, model change, or repeated A–E behavior suite.
+
+Release-only results: structural suite **23 PASS / 0 FAIL / 0 SKIP**; search-contract regression **7 PASS / 0 FAIL / 0 SKIP**; missing-Git regression **1 PASS**, with its fixture correctly returning exit 2 and **21 PASS / 0 FAIL / 2 SKIP**. The isolated release package passed with **37 files, 32 Markdown files, and 132 links**. All commands exited 0 except the deliberately incomplete missing-Git fixture. The final evidence edit is checked separately for Markdown, links, and synchronized copies rather than rerunning behavior.
+
+One fresh ephemeral Codex CLI session made exactly one shell command to read `%USERPROFILE%/.codex/skills/network-reuse-protocol/SKILL.md`. Actual output contained `version: "3.3.0"`, `release_status: "active"`, and `active: "true"`; exit 0. It inherited the unchanged model setting without an override. This proves explicit-path reading, not universal automatic discovery or enforcement.
+
+Measured CLI usage: input 41741; cached input 17920; output 124; reasoning output 0. Charges and account-quota impact: not measured. Raw stdout SHA-256: `d4e6d2d0d6f2e98f4c4d8a3b6d6c69a1f70349d7abc0b92b99eb81b1819a8b04`. Raw logs remain in local `nrp-330-release-evidence`, outside the repository. Installed SKILL SHA-256: `bc98a854a78c6f4f31fe0fcf29704a4b4f6f03c02447cdf56a543fb23639f6fc`.
+
+The Windows atomic replacement of SKILL.md initially returned error 5. After verifying the backup, destination hash, independent path, and single file link, a direct write succeeded without ACL changes; the final hash matches the release. The local CHANGELOG history and operational-radar pointer are preserved as overlays. Other local records, DSH contents, and the Codex configuration retain their pre-install hashes.
+
+Main/PR/tag publication is independently checked after the promotion commit. No other AI configuration or production system is part of this release.
+
+## Rollback and retained limits
+
+`v3.2.0` at `da1a7160204ba5412db7efd881a96b925cdd7494` is the remote rollback baseline; `v3.1.0` is retained. One external pre-3.3.0 snapshot preserves only the existing Codex files affected by this installation and records newly added files. Local history, proposals, operational radar, DSH, and Codex configuration are preserved. Restore that manifest-selected snapshot for local rollback; revert the promotion merge in a new commit for remote withdrawal.
+
+Candidate evidence below remains historical. Five scenario expectations passed, an additional efficiency check failed, and X-post retrieval was skipped. Other clients, exhaustive recall, L3/L4, and savings remain unverified. Publication changes status, not these evidence limits.
+
+## Historical 3.3.0 candidate report
+
+The following report records the pre-release candidate. Statements about inactive status and pending approval describe that stage, not the released version.
+
 # Test report — 3.3.0 candidate
 
 > **DRAFT / NOT ACTIVE.** Candidate based on main `da1a7160204ba5412db7efd881a96b925cdd7494` and `v3.2.0`. Date: 2026-11-04. No active Skill or other AI configuration is changed.

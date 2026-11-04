@@ -15,7 +15,7 @@ const cases = [
   ['no hardcoded winners', 'SKILL.md', '**Reuse proven solutions', '**Always choose Nutlope/hallmark; reuse proven solutions'],
   ['standing authorization', 'SKILL.md', 'remains valid until revoked', 'expires after one task'],
   ['Quick path', 'SKILL.md', 'no formal search', 'mandatory global search'],
-  ['candidate not active', 'SKILL.md', 'release_status: "draft"', 'release_status: "active"'],
+  ['release stays active', 'SKILL.md', 'release_status: "active"', 'release_status: "draft"'],
 ];
 let passed = 0;
 try {
@@ -29,7 +29,7 @@ try {
       cwd: fixture, encoding: 'utf8', timeout: 15000,
     });
     writeFileSync(path, original);
-    if (run.status !== 1 || !/FAIL .*search quality contract|FAIL .*candidate SKILL/.test(run.stdout || '')) {
+    if (run.status !== 1 || !/FAIL .*search quality contract|FAIL .*release SKILL/.test(run.stdout || '')) {
       throw new Error(name + ' was not rejected: ' + run.status + '\n' + run.stdout + run.stderr);
     }
     passed++;

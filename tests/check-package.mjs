@@ -1,4 +1,4 @@
-// Draft 3.3.0 - verify the isolated candidate package; no installation.
+// Active 3.3.0 - verify the isolated complete release package.
 // Run from inside the package: node tests/check-package.mjs
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -70,6 +70,7 @@ const required = [
   'decisions/README.md',
   'decisions/2026-11-03-keep-3.1.0-active.md',
   'decisions/2026-11-03-promote-3.2.0.md',
+  'decisions/2026-11-04-promote-3.3.0.md',
   'records/README.md',
   'references/README.md',
   'references/global-search.md',
@@ -105,9 +106,9 @@ assert(packageName === 'network-reuse-protocol', 'directory name must equal skil
 const skill = read(join(packageRoot, 'SKILL.md'));
 assert(frontmatterName(skill) === packageName, 'SKILL.md name does not match directory name');
 assert(skill.includes('version: "3.3.0"'), 'SKILL.md version missing');
-assert(skill.includes('release_status: "draft"'), 'SKILL.md active release status missing');
-assert(skill.includes('active: "false"'), 'SKILL.md active flag missing');
-assert(skill.includes('DRAFT / NOT ACTIVE'), 'SKILL.md candidate banner missing');
+assert(skill.includes('release_status: "active"'), 'SKILL.md active release status missing');
+assert(skill.includes('active: "true"'), 'SKILL.md active flag missing');
+assert(!skill.includes('DRAFT / NOT ACTIVE') && skill.includes('Active release.'), 'SKILL.md release banner missing');
 assert(skill.includes('loading consumes context and may consume plan/API usage'), 'cost caveat missing');
 assert(skill.includes('[reuse-radar.md](reuse-radar.md)'), 'reuse-radar runtime link missing');
 assert(skill.includes('[decisions/](decisions/README.md)'), 'decisions runtime link missing');
@@ -133,7 +134,7 @@ const skillHash = createHash('sha256').update(readFileSync(join(packageRoot, 'SK
 assert(files.some((path) => path.replaceAll('\\', '/').endsWith('tests/check-package.mjs')), 'package checker missing');
 assert(!files.some((path) => path.replaceAll('\\', '/').endsWith('tests/build-package.mjs')), 'maintainer builder leaked into package');
 
-console.log('PASS - isolated draft 3.3.0 package references and layout');
+console.log('PASS - isolated active 3.3.0 package references and layout');
 console.log('package=' + packageRoot);
 console.log('name=' + packageName);
 console.log('files=' + files.length + ', markdown=' + markdown.length + ', links=' + linkCount);

@@ -2,9 +2,9 @@
 
 All notable changes to Network Reuse Protocol are recorded here. A changelog entry records the change; it does not by itself prove installation or business effect.
 
-## 3.3.0 — Unreleased (2026-11-04)
+## 3.3.0 — 2026-11-04
 
-DRAFT / NOT ACTIVE. Based on published 3.2.0 (`da1a716`); this branch does not upgrade installed Skills or authorize publication.
+Owner-authorized release of candidate `26db7d8`. Published as `v3.3.0`; rollback baseline `v3.2.0` (`da1a716`). Synchronize the complete package to the current Codex Skill without changing DSH or global configuration. The recorded duplicate-retrieval failure and X-access skip remain disclosed; promotion does not turn them into passes.
 
 - Honor user-specified sources through actual retrieval; report access failures and label alternatives.
 - Translate intent into professional vocabulary, failure modes, solution types, and environment before searching.

@@ -1,6 +1,6 @@
-# Test cases — Network Reuse Protocol 3.3.0 candidate
+# Test cases — Network Reuse Protocol 3.3.0
 
-> **DRAFT / NOT ACTIVE.** The existing 3.2.0 cases below are retained. All project scenarios are read-only designs. Do not log in, create ad plans, submit work orders, publish GEO content, or touch production.
+> **Active 3.3.0 test design.** The existing 3.2.0 cases below are retained. All project scenarios are read-only designs. Do not log in, create ad plans, submit work orders, publish GEO content, or touch production.
 
 ## How to run
 

@@ -1,6 +1,6 @@
 # Reuse Radar — Network Reuse Protocol 3.2.0
 
-> **Active 3.2.0 guidance.** Starter radar for the protocol itself. Adopters should keep their own `.nrp/reuse-radar.md`; do not copy vendor facts without re-verification.
+> **Active 3.3.0 guidance.** Starter radar for the protocol itself. Adopters should keep their own `.nrp/reuse-radar.md`; do not copy vendor facts without re-verification.
 
 ## How to read this
 

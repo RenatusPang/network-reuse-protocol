@@ -1,6 +1,6 @@
 # Task records
 
-> **Active 3.2.0 guidance.** Task records prevent duplicate work and preserve acceptance evidence.
+> **Active 3.3.0 guidance.** Task records prevent duplicate work and preserve acceptance evidence.
 
 ## Policy
 

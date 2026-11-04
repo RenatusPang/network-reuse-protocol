@@ -6,15 +6,15 @@ compatibility: Plain Markdown for Agent Skills, AGENTS.md, system prompts, and M
 metadata:
   display_name: "Network Reuse Protocol · 全网复用模式"
   version: "3.3.0"
-  release_status: "draft"
-  active: "false"
+  release_status: "active"
+  active: "true"
   supersedes: "3.2.0"
   updated: "2026-11-04"
 ---
 
 # Network Reuse Protocol 3.3.0 · 全网复用模式
 
-> DRAFT / NOT ACTIVE. Main and the installed Skill remain 3.2.0 (`v3.2.0`).
+> Active release. Supersedes 3.2.0; rollback: Git tag `v3.2.0`.
 
 Metadata and draft banners are informational, not load controls; confirm the client’s loaded path and version.
 

@@ -1,10 +1,10 @@
-# Compatibility — Network Reuse Protocol 3.3.0 candidate
+# Compatibility — Network Reuse Protocol 3.3.0
 
-> **DRAFT / NOT ACTIVE.** 3.3.0 changes search policy only; the 3.2.0 mappings below are retained, not freshly re-researched. Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
+> **Active release.** 3.3.0 changes search policy only; the 3.2.0 mappings below are retained, not freshly re-researched. Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
 
 ## 3.3.0 compatibility delta
 
-No new frontmatter keys, runtime dependencies, transport adapters, or client requirements. Candidate metadata is `version: "3.3.0"`, `release_status: "draft"`, `active: "false"`; these are status markers, not load prevention. Existing 3.2.0 documents and decision records retain their historical version labels. Main and installed Skills remain 3.2.0.
+No new frontmatter keys, runtime dependencies, transport adapters, or client requirements. Release metadata is `version: "3.3.0"`, `release_status: "active"`, `active: "true"`; these are status markers, not load controls. Historical 3.2.0 decisions and validation evidence retain their original labels. The complete current Codex package is synchronized; other clients are not upgraded or newly validated.
 
 Actual candidate-client behavior is recorded separately in [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md); other clients and universal rule compliance remain unverified.
 

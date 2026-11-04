@@ -1,6 +1,6 @@
 # Behavior and client-load evidence — 3.3.0 candidate
 
-> **DRAFT / NOT ACTIVE.** Actual runs on 2026-11-04. Main and the installed Skill remain 3.2.0. Historical 3.2.0 evidence follows separately.
+> **Historical pre-release evidence for active 3.3.0.** Runs on 2026-11-04 used the candidate while main and the installed Skill were 3.2.0. The owner subsequently authorized publication with the limits below disclosed. Behavior was not rerun for promotion. Historical 3.2.0 evidence follows separately.
 
 ## Environment and scope
 

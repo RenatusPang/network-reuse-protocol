@@ -1,6 +1,6 @@
 # Knowledge retention
 
-> **Active 3.2.0 guidance.** Save what will be reused. Do not turn the repository into a transcript dump.
+> **Active 3.3.0 guidance.** Save what will be reused. Do not turn the repository into a transcript dump.
 
 ## Runtime layout
 

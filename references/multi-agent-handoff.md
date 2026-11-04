@@ -1,6 +1,6 @@
 # Multi-agent handoff
 
-> **Active 3.2.0 guidance.** Use a handoff only when work is genuinely split. A single agent should not create a multi-agent ceremony.
+> **Active 3.3.0 guidance.** Use a handoff only when work is genuinely split. A single agent should not create a multi-agent ceremony.
 
 ## When to split
 

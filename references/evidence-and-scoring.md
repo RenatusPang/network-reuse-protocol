@@ -1,6 +1,6 @@
 # Evidence and scoring
 
-> **Active 3.2.0 guidance.** A score supports judgment. It does not replace a hard gate or authorization.
+> **Active 3.3.0 guidance.** A score supports judgment. It does not replace a hard gate or authorization.
 
 ## Separate four things
 

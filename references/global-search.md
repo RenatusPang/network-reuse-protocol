@@ -1,6 +1,6 @@
 # Global search
 
-> **3.3.0 candidate guidance — DRAFT / NOT ACTIVE.** Search is a means to a decision, not a deliverable.
+> **Active 3.3.0 guidance.** Search is a means to a decision, not a deliverable.
 
 ## Define the question first
 

@@ -1,6 +1,6 @@
 # Validation report
 
-> **Active 3.2.0 template.** Report each level separately.
+> **Active 3.3.0 template.** Report each level separately.
 
 ## Scope
 

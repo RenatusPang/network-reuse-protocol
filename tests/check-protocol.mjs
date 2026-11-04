@@ -1,4 +1,4 @@
-// Draft 3.3.0 structural checks; preserve the published 3.2.0 baseline.
+// Active 3.3.0 release checks; preserve the published 3.2.0 rollback baseline.
 // Dependency-free Node 18+ test. Run from any working directory:
 //   node tests/check-protocol.mjs
 
@@ -53,7 +53,7 @@ function walk(dir) {
 function check(name, fn) {
   // The mutation suite targets these two checks only; no repeated network checks.
   if (process.argv.includes('--search-regression') &&
-    !['candidate SKILL frontmatter is standard and inactive', 'search quality contract and five regression scenarios'].includes(name)) return;
+    !['release SKILL frontmatter is standard and active', 'search quality contract and five regression scenarios'].includes(name)) return;
   const number = passed + failed + skipped + 1;
   try {
     const detail = fn();
@@ -150,6 +150,7 @@ const required = [
   'decisions/README.md',
   'decisions/2026-11-03-keep-3.1.0-active.md',
   'decisions/2026-11-03-promote-3.2.0.md',
+  'decisions/2026-11-04-promote-3.3.0.md',
   'records/README.md',
   'references/README.md',
   'references/global-search.md',
@@ -186,7 +187,7 @@ check('required release directory and file structure', () => {
   return required.length + ' required paths; draft tree removed';
 });
 
-check('candidate SKILL frontmatter is standard and inactive', () => {
+check('release SKILL frontmatter is standard and active', () => {
   const { top, metadata } = parseFrontmatter(read(resolve(repoRoot, 'SKILL.md')));
   const allowed = new Set(['name', 'description', 'license', 'compatibility', 'metadata']);
   const extra = Object.keys(top).filter((k) => !allowed.has(k));
@@ -196,10 +197,10 @@ check('candidate SKILL frontmatter is standard and inactive', () => {
   assert(top.description.length > 0 && top.description.length <= 1024, 'description length');
   assert(top.compatibility.length > 0 && top.compatibility.length <= 500, 'compatibility length');
   assert(metadata.version === '3.3.0', 'metadata.version');
-  assert(metadata.release_status === 'draft', 'metadata.release_status');
-  assert(metadata.active === 'false', 'metadata.active');
+  assert(metadata.release_status === 'active', 'metadata.release_status');
+  assert(metadata.active === 'true', 'metadata.active');
   assert(metadata.supersedes === '3.2.0', 'metadata.supersedes');
-  return 'name/description/license/compatibility/metadata valid; draft 3.3.0';
+  return 'name/description/license/compatibility/metadata valid; active 3.3.0';
 });
 
 check('SKILL body is within 100 lines and 5 KB', () => {
@@ -211,18 +212,18 @@ check('SKILL body is within 100 lines and 5 KB', () => {
   return lines + ' lines, ' + bytes + ' bytes';
 });
 
-check('candidate status is explicit; historical records stay historical', () => {
+check('release status is explicit; historical records stay historical', () => {
   const bad = [];
   for (const file of markdownFiles()) {
     const text = read(file);
-    if (/^  release_status: ["']active["']$/m.test(text)) bad.push(relative(repoRoot, file) + ': active candidate');
+    if (file !== resolve(repoRoot, 'tests/TEST-REPORT.md') && file !== resolve(repoRoot, 'tests/BEHAVIOR-EVIDENCE.md') && /^>.*DRAFT \/ NOT ACTIVE/m.test(text)) bad.push(relative(repoRoot, file) + ': draft banner outside historical evidence');
   }
   const readme = read(resolve(repoRoot, 'README.md'));
-  assert(readme.includes('DRAFT / NOT ACTIVE'), 'README candidate statement missing');
-  assert(read(resolve(repoRoot, 'SKILL.md')).includes('DRAFT / NOT ACTIVE'), 'SKILL candidate statement missing');
+  assert(readme.includes('**Active release.**'), 'README active-release statement missing');
+  assert(read(resolve(repoRoot, 'SKILL.md')).includes('Active release.'), 'SKILL release statement missing');
   assert(readme.includes('`v3.1.0`'), 'README rollback tag missing');
   assert(bad.length === 0, bad.join('; '));
-  return 'candidate status checked across ' + markdownFiles().length + ' Markdown files';
+  return 'release status checked across ' + markdownFiles().length + ' Markdown files';
 });
 
 check('all local Markdown links resolve', () => {
@@ -376,16 +377,16 @@ check('no package manager or service dependency was added', () => {
   return 'Markdown and dependency-free Node tests only';
 });
 
-check('candidate changelog preserves release history', () => {
+check('release changelog preserves release history', () => {
   const changes = read(changelog);
-  assert(changes.includes('## 3.3.0 — Unreleased'), '3.3.0 candidate entry missing');
+  assert(changes.includes('## 3.3.0 — 2026-11-04'), '3.3.0 release entry missing');
   assert(changes.includes('## 3.2.0 — 2026-11-03'), '3.2.0 changelog entry missing');
   assert(changes.includes('`v3.1.0`'), 'rollback tag missing from changelog');
   const decisions = read(resolve(repoRoot, 'decisions/README.md'));
-  assert(decisions.includes('Promote 3.2.0 to the active release'), 'promotion decision index entry missing');
+  assert(decisions.includes('Promote 3.3.0 to the active release'), 'promotion decision index entry missing');
   assert(decisions.includes('| accepted |'), 'promotion decision status missing');
   assert(decisions.includes('| superseded |'), 'old decision is not marked superseded');
-  return '3.2.0 active; prior decision superseded';
+  return '3.3.0 active; prior decision superseded';
 });
 
 check('remote main is independently verified', () => {
@@ -401,7 +402,7 @@ check('remote main is independently verified', () => {
   assert(line, 'remote returned no main ref');
   const [sha, ref] = line.trim().split(/\s+/);
   assert(ref === 'refs/heads/main', 'unexpected ref: ' + ref);
-  assert(sha === baselineMain, 'remote main changed from published 3.2.0: ' + sha);
+  assert(sha === baselineMain || sha === head, 'remote main is neither rollback baseline nor this release: ' + sha);
   return 'remote main=' + sha.slice(0, 7) + (sha === baselineMain ? ' (rollback baseline)' : ' (release head)');
 });
 
@@ -423,8 +424,7 @@ check('local Git and rollback tag are consistent', () => {
     throw unavailable('local Git check', error);
   }
   assert(main === origin, 'local main ' + main + ' != origin/main ' + origin);
-  assert(main === baselineMain, 'local main changed from published 3.2.0');
-  assert(branch !== 'main', 'candidate must be checked on an independent branch');
+  assert(main === baselineMain || main === head, 'local main is neither rollback baseline nor this release');
   if (branch === 'main') assert(main === head, 'on main but HEAD differs from main');
   assert(tagType === 'tag', 'v3.2.0 is not an annotated tag');
   assert(tagCommit === baselineMain, 'v3.2.0 ' + tagCommit + ' != rollback baseline ' + baselineMain);
