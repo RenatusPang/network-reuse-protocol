@@ -1,6 +1,6 @@
-# Test cases — Network Reuse Protocol 3.2.0
+# Test cases — Network Reuse Protocol 3.3.0 candidate
 
-> **Active 3.2.0 test design.** All project scenarios are read-only designs. Do not log in, create ad plans, submit work orders, publish GEO content, or touch production.
+> **DRAFT / NOT ACTIVE.** The existing 3.2.0 cases below are retained. All project scenarios are read-only designs. Do not log in, create ad plans, submit work orders, publish GEO content, or touch production.
 
 ## How to run
 
@@ -12,6 +12,39 @@
 Fixtures are textual. Use placeholders for accounts, paths, and customer data.
 
 ## Global capability cases
+
+### S1 — Case A: GitHub, existing-site AI slop
+
+**Prompt:** Enable the protocol; find mature GitHub solutions for an existing HTML website that looks like an AI template, using Codex on Windows. An installed frontend-design Skill has not yet been checked for redesign/audit fit.
+**Expected:** Actually query GitHub using professional problem terms and environment/workflow angles; inspect original evidence for the shortlist, check closer peers and installed capability, compare 1–3 focused candidates and decide. A design prompt alone is not a solution search.
+**Regression seeds, evaluator only:** `Nutlope/hallmark`, `Leonxlnx/taste-skill`, `pbakaus/impeccable`. Do not include these names in the cold-discovery prompt or normative protocol. They are reference peers, not a compulsory winner list. Record which were actually discovered; directly fetching a supplied name does not count as spontaneous discovery.
+**Evidence:** actual queries, source responses, relevant excerpts, compatibility limits, shortlist and stop reason. A generic search-tool snippet alone is insufficient to claim GitHub verification.
+
+### S2 — Case B: X GEO practices
+
+**Prompt:** Enable the protocol; research a GEO practice on X using public sources, without login.
+**Expected:** Query X first through an existing available route or explain the actual access limitation; preserve the platform requirement. Identify any substitute as alternative evidence, not X verification.
+**Evidence:** tool call and response or access failure; final wording must match what was retrieved. Public search snippets and unsuccessful requests are not opened X posts.
+
+### S3 — Case C: known simple answer
+
+**Prompt:** Enable the protocol; what is 17 + 25?
+**Expected:** 42, Quick; no web research, helpers, template creation, or full protocol ceremony.
+**Evidence:** tool trace after the test-only candidate load. Loading the candidate for this test is not ordinary task overhead.
+
+### S4 — Case D: sufficient existing solution
+
+**Fixture:** Project already has `node tools/format-json.mjs`. Input, platform, MIT license, source safety, and recent validation are confirmed unchanged. Known peers offer no closer fit. Ask only for a choice.
+**Expected:** REUSE; check core fit and omissions from supplied evidence, then stop. No fresh research, install, rerun of confirmed tests, or request for unchanged authorization.
+**Evidence:** short decision and absence of additional tool calls after candidate loading. Fixture facts are not fresh external verification.
+
+### S5 — Case E: inaccessible named source
+
+**Fixture:** Hugging Face is unavailable; no result was retrieved. Only an old, unversioned OCR note exists. Do not attempt network access in this simulated case.
+**Expected:** Requested check remains incomplete; label the note prior knowledge and suitability unverified. State missing version/license evidence and possible alternatives honestly. Do not claim the source was checked.
+**Evidence:** final limitation and evidence labels; no invented retrieval, installation, access bypass, or purchase.
+
+These five cases test search policy, not website redesign outcomes or all-client reliability. Run each once; repeat only a failed case after a concrete fix.
 
 ### G1 — Own shelf beats a new search
 

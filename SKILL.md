@@ -5,20 +5,20 @@ license: MIT
 compatibility: Plain Markdown for Agent Skills, AGENTS.md, system prompts, and MCP or A2A orchestrators. No executable dependency; loading may consume context or plan/API usage.
 metadata:
   display_name: "Network Reuse Protocol · 全网复用模式"
-  version: "3.2.0"
-  release_status: "active"
-  active: "true"
-  supersedes: "3.1.0"
-  updated: "2026-11-03"
+  version: "3.3.0"
+  release_status: "draft"
+  active: "false"
+  supersedes: "3.2.0"
+  updated: "2026-11-04"
 ---
 
-# Network Reuse Protocol 3.2.0 · 全网复用模式
+# Network Reuse Protocol 3.3.0 · 全网复用模式
 
-> Active release, superseding 3.1.0. Rollback baseline: Git tag `v3.1.0`.
+> DRAFT / NOT ACTIVE. Main and the installed Skill remain 3.2.0 (`v3.2.0`).
 
-`metadata.version`, `metadata.release_status`, and `metadata.active` are informational status fields. Clients may ignore them; confirm the loaded path and version in the target client.
+Metadata and draft banners are informational, not load controls; confirm the client’s loaded path and version.
 
-**One principle: solve the problem with an approach already validated somewhere. Reuse before build; stop research when the decision is safe.**
+**Reuse proven solutions before building; stop research when evidence supports the decision.**
 
 ## Pick the smallest mode
 
@@ -28,21 +28,21 @@ metadata:
 | Standard | A tool, design, or workflow choice | 1–3 candidates, 1–2 primary sources, one decision |
 | High-risk | Money, production, credentials, compliance, irreversible data | Hard gates, backup and rollback, independent check, L3/L4 plan |
 
-Do not run the full protocol for a task that needs one known fact. Do not skip it for an irreversible change.
+Use Quick for known facts; deepen verification for irreversible changes.
 
 ## Core loop
 
-1. **Frame and check your shelf.** State the goal, constraints, risk, acceptance test, and stop condition. Check [reuse-radar.md](reuse-radar.md), [decisions/](decisions/README.md), [references/](references/README.md), and the current project before searching outside.
-2. **Search globally by problem.** Use the source that can answer the question: official docs, GitHub source and issues, standards, package registries, Hugging Face, papers, Reddit/X/HN field reports, or real cases. One primary source beats ten summaries. See [references/global-search.md](references/global-search.md).
-3. **Verify, gate, score.** Separate what was done, what a source says, what a vendor claims, and what you infer. Apply hard gates first: license, security, environment, permissions, privacy, cost authority. Then score fit, validation, maintenance, cost, and portability. See [references/evidence-and-scoring.md](references/evidence-and-scoring.md).
-4. **Return one decision.** `REUSE`, `COMPOSE`, `ADAPT`, or `BUILD`. Compare adoption cost with build cost. A paid service that is the only fit is a blocked choice needing approval, not a purchase.
-5. **Check the shelf before installing.** Use the resource inventory to find an existing model, skill, plugin, MCP server, project, API, or tool with the same capability. Prefer free, local, already-owned, and already-running options. See [references/resource-inventory.md](references/resource-inventory.md) and [references/cost-control.md](references/cost-control.md).
+1. **Frame and check your shelf.** Identify the user’s intended outcome, constraints, risk, and enough evidence to decide. Check [reuse-radar.md](reuse-radar.md), [decisions/](decisions/README.md), [references/](references/README.md), and the current project before searching outside.
+2. **Search the requested source first.** Actually query a user-named platform; if inaccessible, mark it incomplete and label alternatives. Otherwise choose sources by task. Translate the goal into useful industry/English terms, failure modes, solution types, and environment; do not rely on one literal query. Distinguish opened/checked, search-result-only, prior knowledge, and unverified inference. See [references/global-search.md](references/global-search.md).
+3. **Verify, gate, score.** Separate observation, source claims, and inference. Apply the hard gates below, then score fit, validation, maintenance, cost, and portability. See [references/evidence-and-scoring.md](references/evidence-and-scoring.md).
+4. **Check omissions, then decide.** Keep 1–3 focused candidates: do they solve the core problem, omit a closer peer, fit this environment, duplicate installed tools, and have checkable evidence? Enough evidence: stop. Otherwise at most one targeted follow-up; state gaps. Choose `REUSE`, `COMPOSE`, `ADAPT`, or `BUILD`; compare adoption and build cost. Research never authorizes a purchase.
+5. **Check the shelf before installing.** Check existing models, skills, plugins, MCP servers, projects, APIs, and tools for the same capability. Prefer free, local, owned, running options. See [references/resource-inventory.md](references/resource-inventory.md) and [references/cost-control.md](references/cost-control.md).
 6. **Execute, hand off, and keep permissions.** One owner writes shared state. Use the handoff schema when work crosses agents. Research is read-only. Explicit ongoing authorization within a defined scope remains valid until revoked; while unchanged, do not ask again or invent expiry or quantity limits. Reconfirm on scope growth, new fees, or material risk. See [references/multi-agent-handoff.md](references/multi-agent-handoff.md) and [references/security-governance.md](references/security-governance.md).
-7. **Validate by level and retain only durable knowledge.** Report L1 file/code, L2 runtime/interface, L3 real business flow, and L4 long-term stability separately. Passing code is not business success. Save only reusable decisions and radar entries with provenance and an expiry date. See [references/validation.md](references/validation.md) and [references/knowledge-retention.md](references/knowledge-retention.md).
+7. **Validate by level and retain only durable knowledge.** Separate L1 file/code, L2 runtime/interface, L3 real business flow, and L4 stability. Code passing is not business success. Keep durable decisions with provenance and review dates. See [references/validation.md](references/validation.md) and [references/knowledge-retention.md](references/knowledge-retention.md).
 
 ## Hard gates
 
-A candidate is rejected when any gate fails, regardless of score:
+Reject a candidate if any gate fails:
 
 - **License and terms:** compatible with the intended use and redistribution.
 - **Security:** source reviewed; install scripts and permissions understood; no unreviewed execution.

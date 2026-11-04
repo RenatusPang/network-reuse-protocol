@@ -2,6 +2,17 @@
 
 All notable changes to Network Reuse Protocol are recorded here. A changelog entry records the change; it does not by itself prove installation or business effect.
 
+## 3.3.0 — Unreleased (2026-11-04)
+
+DRAFT / NOT ACTIVE. Based on published 3.2.0 (`da1a716`); this branch does not upgrade installed Skills or authorize publication.
+
+- Honor user-specified sources through actual retrieval; report access failures and label alternatives.
+- Translate intent into professional vocabulary, failure modes, solution types, and environment before searching.
+- Check core fit, closer peers, environment, existing capabilities, and evidence before concluding; allow at most one targeted follow-up for a remaining gap.
+- Separate opened/checked sources, search-result-only leads, prior knowledge, and unverified inference.
+- Preserve Quick mode, 1–3 focused candidates, existing authorization, security, cost, validation, and collaboration rules.
+- Add five targeted search scenarios and candidate/package/status regressions; retain historical 3.2.0 evidence as history.
+
 ## 3.2.0 — 2026-11-03
 
 Promoted from the independently reviewed candidate on branch `draft/nrp-3.2.0`. The formal release is tagged `v3.2.0`; the rollback baseline is annotated tag `v3.1.0` at `705dacf`.

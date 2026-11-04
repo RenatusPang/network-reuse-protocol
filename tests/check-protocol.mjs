@@ -1,4 +1,4 @@
-// Active 3.2.0 structural and release test.
+// Draft 3.3.0 structural checks; preserve the published 3.2.0 baseline.
 // Dependency-free Node 18+ test. Run from any working directory:
 //   node tests/check-protocol.mjs
 
@@ -11,7 +11,7 @@ import { execFileSync } from 'node:child_process';
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..');
 const changelog = resolve(repoRoot, 'CHANGELOG.md');
-const baselineMain = '705dacfcc281ab5b28267be2ca54e7f49171ba31';
+const baselineMain = 'da1a7160204ba5412db7efd881a96b925cdd7494';
 
 let passed = 0;
 let failed = 0;
@@ -51,6 +51,9 @@ function walk(dir) {
 }
 
 function check(name, fn) {
+  // The mutation suite targets these two checks only; no repeated network checks.
+  if (process.argv.includes('--search-regression') &&
+    !['candidate SKILL frontmatter is standard and inactive', 'search quality contract and five regression scenarios'].includes(name)) return;
   const number = passed + failed + skipped + 1;
   try {
     const detail = fn();
@@ -172,7 +175,8 @@ const required = [
   'tests/BEHAVIOR-EVIDENCE.md',
   'tests/build-package.mjs',
   'tests/check-package.mjs',
-  'tests/test-missing-git.mjs'
+  'tests/test-missing-git.mjs',
+  'tests/test-search-regression.mjs'
 ];
 
 check('required release directory and file structure', () => {
@@ -182,7 +186,7 @@ check('required release directory and file structure', () => {
   return required.length + ' required paths; draft tree removed';
 });
 
-check('release SKILL frontmatter is standard and active', () => {
+check('candidate SKILL frontmatter is standard and inactive', () => {
   const { top, metadata } = parseFrontmatter(read(resolve(repoRoot, 'SKILL.md')));
   const allowed = new Set(['name', 'description', 'license', 'compatibility', 'metadata']);
   const extra = Object.keys(top).filter((k) => !allowed.has(k));
@@ -191,11 +195,11 @@ check('release SKILL frontmatter is standard and active', () => {
   assert(top.license === 'MIT', 'bad license');
   assert(top.description.length > 0 && top.description.length <= 1024, 'description length');
   assert(top.compatibility.length > 0 && top.compatibility.length <= 500, 'compatibility length');
-  assert(metadata.version === '3.2.0', 'metadata.version');
-  assert(metadata.release_status === 'active', 'metadata.release_status');
-  assert(metadata.active === 'true', 'metadata.active');
-  assert(metadata.supersedes === '3.1.0', 'metadata.supersedes');
-  return 'name/description/license/compatibility/metadata valid; active 3.2.0';
+  assert(metadata.version === '3.3.0', 'metadata.version');
+  assert(metadata.release_status === 'draft', 'metadata.release_status');
+  assert(metadata.active === 'false', 'metadata.active');
+  assert(metadata.supersedes === '3.2.0', 'metadata.supersedes');
+  return 'name/description/license/compatibility/metadata valid; draft 3.3.0';
 });
 
 check('SKILL body is within 100 lines and 5 KB', () => {
@@ -207,23 +211,22 @@ check('SKILL body is within 100 lines and 5 KB', () => {
   return lines + ' lines, ' + bytes + ' bytes';
 });
 
-check('release status is consistent and no candidate banner remains', () => {
+check('candidate status is explicit; historical records stay historical', () => {
   const bad = [];
   for (const file of markdownFiles()) {
     const text = read(file);
-    if (text.includes('DRAFT / NOT ACTIVE')) bad.push(relative(repoRoot, file) + ': candidate banner');
-    if (/^release_status:\s*["']?draft["']?\s*$/mi.test(text)) bad.push(relative(repoRoot, file) + ': draft status');
-    if (/^active:\s*["']?false["']?\s*$/mi.test(text)) bad.push(relative(repoRoot, file) + ': inactive status');
+    if (/^  release_status: ["']active["']$/m.test(text)) bad.push(relative(repoRoot, file) + ': active candidate');
   }
   const readme = read(resolve(repoRoot, 'README.md'));
-  assert(readme.includes('**Active release.**'), 'README active-release statement missing');
+  assert(readme.includes('DRAFT / NOT ACTIVE'), 'README candidate statement missing');
+  assert(read(resolve(repoRoot, 'SKILL.md')).includes('DRAFT / NOT ACTIVE'), 'SKILL candidate statement missing');
   assert(readme.includes('`v3.1.0`'), 'README rollback tag missing');
   assert(bad.length === 0, bad.join('; '));
-  return 'active status and no draft banners across ' + markdownFiles().length + ' Markdown files';
+  return 'candidate status checked across ' + markdownFiles().length + ' Markdown files';
 });
 
 check('all local Markdown links resolve', () => {
-  const files = [changelog, ...markdownFiles()];
+  const files = markdownFiles();
   let count = 0;
   for (const file of files) count += checkLocalLinks(file);
   assert(count >= 50, 'only ' + count + ' local links found');
@@ -373,8 +376,9 @@ check('no package manager or service dependency was added', () => {
   return 'Markdown and dependency-free Node tests only';
 });
 
-check('release changelog and decision records agree', () => {
+check('candidate changelog preserves release history', () => {
   const changes = read(changelog);
+  assert(changes.includes('## 3.3.0 — Unreleased'), '3.3.0 candidate entry missing');
   assert(changes.includes('## 3.2.0 — 2026-11-03'), '3.2.0 changelog entry missing');
   assert(changes.includes('`v3.1.0`'), 'rollback tag missing from changelog');
   const decisions = read(resolve(repoRoot, 'decisions/README.md'));
@@ -397,7 +401,7 @@ check('remote main is independently verified', () => {
   assert(line, 'remote returned no main ref');
   const [sha, ref] = line.trim().split(/\s+/);
   assert(ref === 'refs/heads/main', 'unexpected ref: ' + ref);
-  assert(sha === baselineMain || sha === head, 'remote main ' + sha + ' is neither the rollback baseline nor this release');
+  assert(sha === baselineMain, 'remote main changed from published 3.2.0: ' + sha);
   return 'remote main=' + sha.slice(0, 7) + (sha === baselineMain ? ' (rollback baseline)' : ' (release head)');
 });
 
@@ -412,18 +416,19 @@ check('local Git and rollback tag are consistent', () => {
     main = git(['rev-parse', 'main']);
     origin = git(['rev-parse', 'origin/main']);
     head = git(['rev-parse', 'HEAD']);
-    tagType = git(['cat-file', '-t', 'v3.1.0']);
-    tagCommit = git(['rev-parse', 'v3.1.0^{commit}']);
+    tagType = git(['cat-file', '-t', 'v3.2.0']);
+    tagCommit = git(['rev-parse', 'v3.2.0^{commit}']);
     branch = git(['branch', '--show-current']);
   } catch (error) {
     throw unavailable('local Git check', error);
   }
   assert(main === origin, 'local main ' + main + ' != origin/main ' + origin);
-  assert(main === baselineMain || main === head, 'local main is neither the rollback baseline nor this release');
+  assert(main === baselineMain, 'local main changed from published 3.2.0');
+  assert(branch !== 'main', 'candidate must be checked on an independent branch');
   if (branch === 'main') assert(main === head, 'on main but HEAD differs from main');
-  assert(tagType === 'tag', 'v3.1.0 is not an annotated tag');
-  assert(tagCommit === baselineMain, 'v3.1.0 ' + tagCommit + ' != rollback baseline ' + baselineMain);
-  return 'local main=origin/main=' + main.slice(0, 7) + '; v3.1.0=' + tagCommit.slice(0, 7);
+  assert(tagType === 'tag', 'v3.2.0 is not an annotated tag');
+  assert(tagCommit === baselineMain, 'v3.2.0 ' + tagCommit + ' != rollback baseline ' + baselineMain);
+  return 'local main=origin/main=' + main.slice(0, 7) + '; v3.2.0=' + tagCommit.slice(0, 7);
 });
 
 check('README links every capability reference', () => {
@@ -441,6 +446,25 @@ check('README links every capability reference', () => {
   const missing = references.filter((x) => !text.includes(x));
   assert(missing.length === 0, 'missing: ' + missing.join(', '));
   return references.length + ' reference links';
+});
+
+check('search quality contract and five regression scenarios', () => {
+  const search = read(resolve(repoRoot, 'references/global-search.md'));
+  for (const term of ['User-specified source takes priority', 'actually query that source',
+    'Key-candidate omission check', 'at most one targeted follow-up',
+    'Opened and checked', 'Search-result-only', 'Prior knowledge', 'Unverified inference',
+    'An unresolved direct-fit peer', 'do not reread the same README']) {
+    assert(search.includes(term), 'missing search contract: ' + term);
+  }
+  const skill = read(resolve(repoRoot, 'SKILL.md'));
+  for (const term of ['Search the requested source first', 'Check omissions, then decide',
+    'remains valid until revoked', 'no formal search', 'scope growth, new fees, or material risk']) {
+    assert(skill.includes(term), 'core rule missing: ' + term);
+  }
+  assert(!/Nutlope|hallmark|Leonxlnx|taste-skill|pbakaus|impeccable/i.test(skill + search), 'project names hardcoded in runtime rules');
+  const cases = read(resolve(repoRoot, 'tests/test-cases.md'));
+  for (const id of ['S1', 'S2', 'S3', 'S4', 'S5']) assert(cases.includes('### ' + id + ' —'), 'missing scenario ' + id);
+  return 'static contract only; client behavior is recorded separately';
 });
 
 check('acceptance criteria covers the twelve engineering tests', () => {

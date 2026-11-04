@@ -1,3 +1,57 @@
+# Test report — 3.3.0 candidate
+
+> **DRAFT / NOT ACTIVE.** Candidate based on main `da1a7160204ba5412db7efd881a96b925cdd7494` and `v3.2.0`. Date: 2026-11-04. No active Skill or other AI configuration is changed.
+
+## Scope and commands
+
+Focused search-policy change; existing safety, cost, inventory, authorization, L1–L4, and collaboration files are retained. Run one relevant acceptance pass; repeat only failures or checks directly affected by later edits.
+
+    node tests/check-protocol.mjs
+    node tests/test-missing-git.mjs
+    node tests/test-search-regression.mjs
+    node tests/build-package.mjs <isolated-parent>
+    node <isolated-parent>/network-reuse-protocol/tests/check-package.mjs
+    git diff --check
+
+Client behavior and measured usage: [BEHAVIOR-EVIDENCE.md](BEHAVIOR-EVIDENCE.md). Static terms and mutation checks do not substitute for model execution.
+
+## Current results
+
+| Check | PASS | FAIL | SKIP | Exit / evidence |
+| --- | --- | --- | --- | --- |
+| Full relevant structural suite | 23 | 0 | 0 | Exit 0; 37 required paths, 31 Markdown files, 29 scenarios; before final evidence-only edits |
+| Missing-Git regression | 1 | 0 | 0 | Wrapper exit 0; fixture correctly exits 2 with 21 PASS / 0 FAIL / 2 SKIP |
+| Search-policy mutation regression | 7 | 0 | 0 | Exit 0; named source, follow-up bound, provenance, no hardcoded products, ongoing authorization, Quick, and draft state |
+| Isolated package references/layout | 1 | 0 | 0 | Exit 0; 36 files, 31 Markdown files, 126 Markdown links; no repository fallback |
+| Git whitespace/diff check | 1 | 0 | 0 | `git diff --check`, exit 0 |
+| Candidate explicit-path load | 1 | 0 | 0 | Candidate 3.3.0 rules appear in actual Codex CLI command output |
+| A–E core behavior expectations | 5 | 0 | 0 | Actual client traces; E is simulated access failure, B passes honest-limit handling |
+| Additional A efficiency check | 0 | 1 | 0 | Duplicate successful local read and GitHub query batch remain in the repaired run |
+| Successful X-post retrieval | 0 | 0 | 1 | Actual X request returned HTTP 403; not silently replaced |
+
+Static/regression checks and behavioral observations are separate. This is **not** an all-pass behavior report. Other clients, automatic candidate discovery, real candidate Windows execution, L3, L4, and savings were not verified.
+
+The first mutation-suite run exposed a fixture bug: replacing one repeated phrase left the second occurrence intact. The fixture now removes both occurrences with `replaceAll`; only that suite was rerun. Initial behavior A also failed its omission check. One targeted rule repair was followed by A only; the original failure remains documented, not overwritten. No new general research or full behavioral cycle followed.
+
+### Baseline protection and package
+
+- Remote evidence: `git ls-remote origin refs/heads/main` returned `da1a7160204ba5412db7efd881a96b925cdd7494`.
+- Independent local evidence: local `main`, `origin/main`, and annotated `v3.2.0` resolve to that same commit; the working branch is `codex/nrp-3.3.0-search-quality`.
+- The retained annotated `v3.1.0` resolves to `705dacfcc281ab5b28267be2ca54e7f49171ba31`. No tag was created or moved.
+- The current installed 3.2.0 `SKILL.md` equals main after line-ending normalization. No global Skill or AI configuration was modified.
+- A complete candidate was copied outside the checkout into `nrp-330-evidence/package/network-reuse-protocol`. All package Markdown references resolve within that directory; LICENSE, reuse radar, decisions, compatibility, templates, and references are included. This is an isolated package check, not an installation.
+- Candidate `SKILL.md` SHA-256: `3efb13ab965ae3682454771fdca900a89be918626fb81eb519de1e8cce9abd35`. Final search-reference SHA-256: `3bef67417a10c205942111f0ac4fc90e1f68b68f4360ebe22c2a6280af29ca63`. These identify the repaired-A snapshot.
+
+### Context cost and release readiness
+
+The normalized Skill body is 5094 bytes / 56 lines, versus 5108 bytes previously; the whole entry file is 5748 versus 5762 bytes. The on-demand search reference grows from 6764 to 11320 bytes. No new runtime dependency or obligatory Quick-mode search was added. Loading the expanded reference still consumes additional context; the observed duplicate calls add unnecessary work. No comparable before/after token measurement, fee measurement, or savings percentage exists.
+
+The candidate is ready for PR review, not represented as unconditionally ready to publish. Its specific remaining behavior defect is duplicate successful retrieval in A; Hallmark was only found by a seeded evaluator check, so exhaustive recall is also unproven. The PR must disclose these limits. Main and the installed Skill stay 3.2.0 pending the user's release decision. The tests do not create another approval gate for ordinary protocol tasks.
+
+## Historical 3.2.0 evidence
+
+The report below records the earlier release only. Its pass counts, installed-path evidence, and sign-off are not 3.3.0 results.
+
 # Test report — Network Reuse Protocol 3.2.0
 
 > **Active release record.** This report separates document structure, isolated package references, target-client loading, behavior evidence, and business validation. Static checks are not client-load proof.

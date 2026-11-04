@@ -1,6 +1,12 @@
-# Compatibility — Network Reuse Protocol 3.2.0
+# Compatibility — Network Reuse Protocol 3.3.0 candidate
 
-> **Active release.** Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
+> **DRAFT / NOT ACTIVE.** 3.3.0 changes search policy only; the 3.2.0 mappings below are retained, not freshly re-researched. Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
+
+## 3.3.0 compatibility delta
+
+No new frontmatter keys, runtime dependencies, transport adapters, or client requirements. Candidate metadata is `version: "3.3.0"`, `release_status: "draft"`, `active: "false"`; these are status markers, not load prevention. Existing 3.2.0 documents and decision records retain their historical version labels. Main and installed Skills remain 3.2.0.
+
+Actual candidate-client behavior is recorded separately in [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md); other clients and universal rule compliance remain unverified.
 
 ## Why this file exists
 
