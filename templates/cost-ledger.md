@@ -1,6 +1,6 @@
 # Cost ledger
 
-> **Active 3.2.0 template.** Record actual and estimated cost separately.
+> **Active 3.3.0 template.** Record actual and estimated cost separately.
 
 ## Budget
 

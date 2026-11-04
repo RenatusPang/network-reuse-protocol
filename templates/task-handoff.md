@@ -1,6 +1,6 @@
 # Task handoff
 
-> **Active 3.2.0 template.** Copy into a project only when needed.
+> **Active 3.3.0 template.** Copy into a project only when needed.
 
 ## Header
 

@@ -1,6 +1,6 @@
 # References — load on demand
 
-> **Active 3.2.0 guidance.** These files are detail, not a required sequence. Load only what the task needs.
+> **Active 3.3.0 guidance.** These files are detail, not a required sequence. Load only what the task needs.
 
 | File | Load when | Skip when |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # AI cost control
 
-> **Active 3.2.0 guidance.** The protocol must never install a tool or buy a service as part of an upgrade.
+> **Active 3.3.0 guidance.** The protocol must never install a tool or buy a service as part of an upgrade.
 
 ## Cost hierarchy
 

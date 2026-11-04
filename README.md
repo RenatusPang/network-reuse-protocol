@@ -1,6 +1,6 @@
-# Network Reuse Protocol 3.2.0 · 全网复用模式
+# Network Reuse Protocol 3.3.0 · 全网复用模式
 
-**Active release.** 3.2.0 is a portable work protocol for choosing proven solutions before building. It keeps the compact 3.1.0 reuse rule as the default for simple work and adds bounded discipline for high-risk, multi-agent, cost-sensitive, and long-lived work.
+**Active release.** 3.3.0 supersedes 3.2.0 after the owner authorized publication and synchronization. The protocol is a portable work protocol for choosing proven solutions before building. It keeps the compact 3.1.0 reuse rule as the default for simple work and adds bounded discipline for high-risk, multi-agent, cost-sensitive, and long-lived work.
 
 The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter and has no executable runtime dependency. Loading its rules and optional references may consume context, plan quota, or API usage. No comparable measurement exists, so no savings percentage is claimed.
 
@@ -8,13 +8,19 @@ The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter an
 
 | Item | State |
 | --- | --- |
-| Version | 3.2.0 |
+| Version | 3.3.0 |
 | Channel | active |
-| Supersedes | 3.1.0 |
-| Rollback | annotated Git tag `v3.1.0` at `705dacf` |
+| Supersedes | 3.2.0 |
+| Rollback baseline | annotated Git tag `v3.2.0` at `da1a716`; earlier `v3.1.0` also retained |
 | License | MIT |
-| Release tag | `v3.2.0` |
+| Release tag | `v3.3.0` |
 | Production systems touched | none |
+
+## What changes from 3.2.0
+
+3.2.0 already encouraged problem-based search. 3.3.0 makes a user-named source a required actual retrieval or an explicit incomplete check; translates the goal into useful professional terms; checks for closer candidates before stopping; and distinguishes opened sources, search-only leads, prior knowledge, and inference. A general search is not a silent substitute.
+
+Quick remains direct. Standard keeps 1–3 focused candidates and uses at most one targeted follow-up only for a decision-changing gap. No new tool, service, model, permission, or runtime is required. Evidence and limits are in [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
 
 ## Eight capabilities
 
@@ -38,9 +44,9 @@ The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter an
 5. [templates/README.md](templates/README.md) — copy a template into a project only when it reduces work.
 6. [tests/TEST-REPORT.md](tests/TEST-REPORT.md), [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md), [tests/test-cases.md](tests/test-cases.md), and [tests/acceptance-criteria.md](tests/acceptance-criteria.md) — verification evidence and limits.
 
-## Installation
+## Complete release package
 
-Install a directory named `network-reuse-protocol`; the directory name must match the Skill `name`. The complete package contains:
+Build the complete release in a directory named `network-reuse-protocol`; the directory name must match the Skill `name`. Update only the intended client path and preserve local records and rollback data. The complete package contains:
 
     network-reuse-protocol/
       SKILL.md
@@ -60,13 +66,15 @@ The repository-only file `tests/build-package.mjs` is a maintainer builder and i
 
 ## Verification status
 
-Document structure, isolated package references, and the active version are checked by [tests/check-protocol.mjs](tests/check-protocol.mjs) and [tests/check-package.mjs](tests/check-package.mjs). A target-client load check uses the actual installed path and records the client and model. Those are separate claims from behavior, business success, and long-term stability.
+Document structure, isolated package references, and release status are checked by [tests/check-protocol.mjs](tests/check-protocol.mjs) and [tests/check-package.mjs](tests/check-package.mjs). The 3.3.0 behavior test explicitly read candidate files in an isolated Codex CLI session; it did not install the candidate or prove automatic discovery. These are separate claims from business success and long-term stability.
 
-The four short behavior scenarios were run against the reviewed candidate in Codex CLI `0.166.0-alpha.5.1` with `deepseek/deepseek-flash`; they were not rerun for promotion. Other clients, automatic enforcement, real business flow (L3), long-term stability (L4), and savings remain unverified. The three project scenarios in [tests/test-cases.md](tests/test-cases.md) are read-only designs; no production account, ad plan, work order, or GEO publication was operated. See [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
+The five new scenario expectations were observed, including actual GitHub discovery of a direct existing-site redesign solution after a focused repair. A separate efficiency check failed because the client repeated successful reads/queries. X content access was unavailable. The evidence report preserves both failures and limits; this is not an all-pass behavior or savings claim.
+
+Historical 3.2.0 evidence: the four short behavior scenarios were run against the reviewed candidate in Codex CLI `0.166.0-alpha.5.1` with `deepseek/deepseek-flash`; they were not rerun for promotion. Other clients, automatic enforcement, real business flow (L3), long-term stability (L4), and savings remain unverified. The three project scenarios in [tests/test-cases.md](tests/test-cases.md) are read-only designs; no production account, ad plan, work order, or GEO publication was operated. See [tests/BEHAVIOR-EVIDENCE.md](tests/BEHAVIOR-EVIDENCE.md).
 
 ## Rollback
 
-The complete 3.1.0 release is preserved by annotated tag `v3.1.0` at `705dacf`. To roll back, check out that tag and restore the pre-promotion local Skill snapshot. Restart the client and confirm 3.1.0 from the canonical path. If a remote withdrawal is required, revert the promotion commit; do not rewrite shared `main` history.
+The rollback baseline is annotated tag `v3.2.0` at `da1a716`. The earlier 3.1.0 release remains at `v3.1.0` (`705dacf`). Restore the verified pre-3.3.0 Codex file snapshot; remove only files listed as newly added by that installation. Keep local records and other clients intact. To withdraw the remote release, revert the promotion merge in a new commit; never reset shared history or move published tags.
 
 ## License
 

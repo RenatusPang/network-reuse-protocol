@@ -1,6 +1,6 @@
 # Resource inventory and duplicate-install prevention
 
-> **Active 3.2.0 guidance.** Inventory the resources that affect decisions. Do not build a catalog of everything.
+> **Active 3.3.0 guidance.** Inventory the resources that affect decisions. Do not build a catalog of everything.
 
 ## Purpose
 

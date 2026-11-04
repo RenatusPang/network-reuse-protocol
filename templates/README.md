@@ -1,6 +1,6 @@
 # Templates
 
-> **Active 3.2.0 guidance.** Copy a template only when it reduces work. The protocol never creates project files automatically.
+> **Active 3.3.0 guidance.** Copy a template only when it reduces work. The protocol never creates project files automatically.
 
 | Template | Use when | Output |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Security and execution governance
 
-> **Active 3.2.0 guidance.** Security is a gate, not a score. The stricter project or legal rule wins.
+> **Active 3.3.0 guidance.** Security is a gate, not a score. The stricter project or legal rule wins.
 
 ## Operation classes
 

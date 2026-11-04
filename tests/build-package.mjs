@@ -1,4 +1,4 @@
-// Build a self-contained 3.2.0 install package in a temp or isolated directory.
+// Build a self-contained 3.3.0 release package in a temp or isolated directory.
 // Repository-only maintainer tool; it is not copied into the installed package.
 // Usage: node tests/build-package.mjs [output-parent-dir]
 
@@ -57,7 +57,7 @@ try {
   walk(packageRoot);
   files.sort();
 
-  console.log('PASS - active 3.2.0 package built');
+  console.log('PASS - active 3.3.0 package built');
   console.log('package=' + packageRoot);
   console.log('name=' + basename(packageRoot));
   console.log('files=' + files.length);

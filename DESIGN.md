@@ -1,6 +1,6 @@
-# Design — Network Reuse Protocol 3.2.0
+# Design — Network Reuse Protocol 3.3.0
 
-> **Active release.** 3.2.0 supersedes 3.1.0; the rollback baseline is Git tag `v3.1.0`.
+> **Active 3.3.0 release.** The 3.2.0 design below is retained. The targeted delta is search quality in [references/global-search.md](references/global-search.md); see [CHANGELOG.md](CHANGELOG.md). Rollback baseline: `v3.2.0`.
 
 ## Problem
 

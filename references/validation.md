@@ -1,6 +1,6 @@
 # Validation and acceptance
 
-> **Active 3.2.0 guidance.** A passing script is not a successful business outcome.
+> **Active 3.3.0 guidance.** A passing script is not a successful business outcome.
 
 ## Four levels
 

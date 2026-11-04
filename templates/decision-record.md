@@ -1,6 +1,6 @@
 # Decision record
 
-> **Active 3.2.0 template.** One decision per record.
+> **Active 3.3.0 template.** One decision per record.
 
 ## Metadata
 

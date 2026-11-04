@@ -1,6 +1,6 @@
 # Reuse radar entry
 
-> **Active 3.2.0 template.** Keep the radar short and decision-oriented.
+> **Active 3.3.0 template.** Keep the radar short and decision-oriented.
 
 ## Index
 
