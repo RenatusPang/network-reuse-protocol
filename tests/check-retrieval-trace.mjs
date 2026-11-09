@@ -1,5 +1,5 @@
 // Audit repeated *successful* read-only calls in a Codex-style JSONL trace.
-// This is a review flag, not proof that a model ignored the protocol.
+// This is a review flag for supported call shapes, not proof that a model ignored the protocol.
 // No API calls, repository writes, or external dependencies are required.
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -39,13 +39,29 @@ function classify(item) {
     const shortTool = tool.replace(/^mcp__[^_]+__/, '');
     if (writeVerb.test(tool) || writeVerb.test(shortTool)) return { kind: 'write' };
     if (!readVerb.test(tool) && !readVerb.test(shortTool)) return { kind: 'other' };
-    return { kind: 'read', display: 'MCP ' + String(item.server || '') + '/' + tool,
+    return { kind: 'read', display: 'MCP retrieval',
       signature: 'mcp:' + String(item.server || '') + ':' + tool + ':' + stable(item.arguments ?? {}) };
   }
   if (item.type === 'command_execution') {
     const cmd = String(item.command || '').trim();
     if (writeCommand.test(cmd)) return { kind: 'write' };
-    if (readCommand.test(cmd)) return { kind: 'read', display: 'command_execution',
+    // Codex CLI records the shell wrapper, not just the command inside -Command.
+    const wrapped = /(?:^|\s)(?:["']?[^\s"']*[\\/])?(?:pwsh|powershell)(?:\.exe)?["']?\s+.*-Command\b/i.test(cmd);
+    if (wrapped && /https:\/\/api\.github\.com\/search\/repositories/i.test(cmd)) {
+      const queries = cmd.match(/\bqueries\s*=\s*(\[[^\r\n]*\])/i);
+      if (queries) {
+        try {
+          const requested = JSON.parse(queries[1].replaceAll("'", '"'));
+          const responses = String(item.aggregated_output || '').split(/\r?\n/).filter(Boolean).map(JSON.parse);
+          if (Array.isArray(requested) && requested.length > 0 && responses.length === requested.length &&
+              responses.every((r, n) => r.query === requested[n] && typeof r.total === 'number' && Array.isArray(r.items))) {
+            return { kind: 'read', display: 'GitHub search batch',
+              signature: 'github-search:' + stable(requested) };
+          }
+        } catch { /* unsupported query or response shape; do not assert success */ }
+      }
+    }
+    if (readCommand.test(cmd) || (wrapped && /\b(?:Get-Content|Get-ChildItem|Select-String)\b/i.test(cmd))) return { kind: 'read', display: 'command_execution',
       signature: 'command:' + cmd.replace(/\s+/g, ' ') };
   }
   return { kind: 'other' };
@@ -78,10 +94,11 @@ function mcp(query, status = 'completed') {
   return event({ id: 'x', type: 'mcp_tool_call', server: 'github', tool: 'search',
     arguments: { query }, status });
 }
-function shell(cmd, exit_code = 0) {
-  return event({ type: 'command_execution', command: cmd, exit_code });
+function shell(cmd, exit_code = 0, aggregated_output = '') {
+  return event({ type: 'command_execution', command: cmd, exit_code, aggregated_output });
 }
 function test() {
+  const githubOutput = (queries) => queries.map(query => JSON.stringify({query, total: 1, items: [{}]})).join('\n');
   const cases = [
     ['duplicate successful search', [mcp('same'), mcp('same')], 'REVIEW', 1],
     ['different search', [mcp('A'), mcp('B')], 'PASS', 0],
@@ -90,7 +107,11 @@ function test() {
     ['read after a write', [shell('Get-Content file.txt'), shell('Set-Content file.txt new'), shell('Get-Content file.txt')], 'PASS', 0],
     ['no retrieval is incomplete', [shell('node build.mjs')], 'INCOMPLETE', 0],
     ['tool write resets evidence', [mcp('A'), event({type:'mcp_tool_call',server:'fs',tool:'write_file',status:'completed',arguments:{path:'a'}}), mcp('A')], 'PASS', 0],
-    ['whitespace args normalized', [mcp('hello   world'), mcp('hello world')], 'REVIEW', 1]
+    ['whitespace args normalized', [mcp('hello   world'), mcp('hello world')], 'REVIEW', 1],
+    ['wrapped successful read', [shell('pwsh -Command "Get-Content file.txt"'), shell('pwsh -Command "Get-Content file.txt"')], 'REVIEW', 1],
+    ['same GitHub queries with different execution', [shell('pwsh -Command "queries=[\'A\',\'B\']; https://api.github.com/search/repositories"', 0, githubOutput(['A','B'])), shell('pwsh -Command "queries=[\'A\',\'B\']; https://api.github.com/search/repositories; parallel"', 0, githubOutput(['A','B']))], 'REVIEW', 1],
+    ['different GitHub queries', [shell('pwsh -Command "queries=[\'A\']; https://api.github.com/search/repositories"', 0, githubOutput(['A'])), shell('pwsh -Command "queries=[\'B\']; https://api.github.com/search/repositories"', 0, githubOutput(['B']))], 'PASS', 0],
+    ['HTTP error with shell exit zero', [shell('pwsh -Command "queries=[\'A\']; https://api.github.com/search/repositories"', 0, '{"query":"A","error":"HTTP 403"}'), shell('pwsh -Command "queries=[\'A\']; https://api.github.com/search/repositories"', 0, githubOutput(['A']))], 'PASS', 0]
   ];
   let passed = 0;
   for (const [name, trace, expected, count] of cases) {
@@ -108,17 +129,17 @@ function test() {
 
 function run(path) {
   let lines;
-  try { lines = readFileSync(path, 'utf8').split(/\r?\n/).filter(x => x.trim()); }
-  catch (error) { console.error('INCOMPLETE - cannot read trace: ' + error.message); process.exitCode = 2; return; }
+  try { lines = readFileSync(path, 'utf8').replace(/^\uFEFF/, '').split(/\r?\n/).filter(x => x.trim()); }
+  catch { console.error('INCOMPLETE - cannot read trace'); process.exitCode = 2; return; }
   const records = [];
   try { for (const line of lines) records.push(JSON.parse(line)); }
-  catch (error) { console.error('INCOMPLETE - invalid JSONL: ' + error.message); process.exitCode = 2; return; }
+  catch { console.error('INCOMPLETE - invalid JSONL'); process.exitCode = 2; return; }
   const result = audit(records);
   console.log('STATUS: ' + result.status + ' | events=' + result.events + ' | successful_reads=' + result.reads + ' | repeated=' + result.duplicates.length);
   for (const d of result.duplicates) {
     console.log('REVIEW - duplicate successful retrieval: first_line=' + d.first + ', repeated_line=' + d.repeat + ', tool=' + d.display + ', sha12=' + d.fingerprint);
   }
-  console.log('NOTE: Review flags are candidates, not automatic proof of waste; repeated reads after upstream changes can be justified.');
+  console.log('NOTE: Only supported call shapes are audited. Review flags require context; PASS does not establish model behavior improvement.');
   process.exitCode = result.status === 'PASS' ? 0 : result.status === 'REVIEW' ? 1 : 2;
 }
 
