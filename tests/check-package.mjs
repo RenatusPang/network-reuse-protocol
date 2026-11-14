@@ -1,4 +1,4 @@
-// Active 3.3.0 - verify the isolated complete release package.
+// Active 3.3.1 - verify the isolated complete release package.
 // Run from inside the package: node tests/check-package.mjs
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -105,7 +105,7 @@ assert(packageName === 'network-reuse-protocol', 'directory name must equal skil
 
 const skill = read(join(packageRoot, 'SKILL.md'));
 assert(frontmatterName(skill) === packageName, 'SKILL.md name does not match directory name');
-assert(skill.includes('version: "3.3.0"'), 'SKILL.md version missing');
+assert(skill.includes('version: "3.3.1"'), 'SKILL.md version missing');
 assert(skill.includes('release_status: "active"'), 'SKILL.md active release status missing');
 assert(skill.includes('active: "true"'), 'SKILL.md active flag missing');
 assert(!skill.includes('DRAFT / NOT ACTIVE') && skill.includes('Active release.'), 'SKILL.md release banner missing');
@@ -134,7 +134,7 @@ const skillHash = createHash('sha256').update(readFileSync(join(packageRoot, 'SK
 assert(files.some((path) => path.replaceAll('\\', '/').endsWith('tests/check-package.mjs')), 'package checker missing');
 assert(!files.some((path) => path.replaceAll('\\', '/').endsWith('tests/build-package.mjs')), 'maintainer builder leaked into package');
 
-console.log('PASS - isolated active 3.3.0 package references and layout');
+console.log('PASS - isolated active 3.3.1 package references and layout');
 console.log('package=' + packageRoot);
 console.log('name=' + packageName);
 console.log('files=' + files.length + ', markdown=' + markdown.length + ', links=' + linkCount);

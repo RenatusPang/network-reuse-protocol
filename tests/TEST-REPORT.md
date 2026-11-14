@@ -1,4 +1,22 @@
-# Release report — 3.3.0
+# Test report — Network Reuse Protocol 3.3.1
+
+## 3.3.1 targeted maintenance checks — 2026-11-14
+
+The owner requested a direct desktop Gemini discussion followed by implementation. The agreed scope was a concise client-specific quick start and bounded retrieval with necessary reread exceptions. Public baseline: `65319b4` / `v3.3.0`; private client extensions were not copied or replaced.
+
+| Check | Actual result |
+| --- | --- |
+| New static assertions on unchanged 3.3.0 | Expected failure: budget contract absent; 1 pass, 1 fail |
+| `node tests/check-protocol.mjs` after patch | 23 passed, 0 failed, 0 skipped; exit 0 |
+| `node tests/test-search-regression.mjs` | 11 regression mutations correctly rejected; exit 0 |
+| Isolated package and `node tests/check-package.mjs` | PASS; 37 files, 32 Markdown files, 136 links; exit 0 |
+| `git diff --check` | exit 0 |
+
+The core body is 56 lines / 5050 UTF-8 bytes. These are structural and checker-regression results from Windows, not fresh model-behavior tests or measured Token savings. No Codex model was invoked for this patch. The desktop Gemini exchange is a design review, not evidence of universal client compatibility. Historical failures and unverified surfaces below remain disclosed.
+
+## Historical 3.3.0 evidence
+
+The following records describe the earlier release and were not rerun or relabeled as current behavior evidence.
 
 > **Active release, owner-authorized on 2026-11-04.** Promotes candidate `26db7d8` from PR #1. The existing efficiency FAIL and X-access SKIP remain disclosed; the owner authorized publication after receiving that report.
 

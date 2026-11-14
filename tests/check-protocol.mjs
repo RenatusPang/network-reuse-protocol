@@ -1,4 +1,4 @@
-// Active 3.3.0 release checks; preserve the published 3.2.0 rollback baseline.
+// Active 3.3.1 release checks; preserve the published 3.3.0 rollback baseline.
 // Dependency-free Node 18+ test. Run from any working directory:
 //   node tests/check-protocol.mjs
 
@@ -11,7 +11,7 @@ import { execFileSync } from 'node:child_process';
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..');
 const changelog = resolve(repoRoot, 'CHANGELOG.md');
-const baselineMain = 'da1a7160204ba5412db7efd881a96b925cdd7494';
+const baselineMain = '65319b4f70a0ed583d81d417fe377676cf5ca490';
 
 let passed = 0;
 let failed = 0;
@@ -196,11 +196,11 @@ check('release SKILL frontmatter is standard and active', () => {
   assert(top.license === 'MIT', 'bad license');
   assert(top.description.length > 0 && top.description.length <= 1024, 'description length');
   assert(top.compatibility.length > 0 && top.compatibility.length <= 500, 'compatibility length');
-  assert(metadata.version === '3.3.0', 'metadata.version');
+  assert(metadata.version === '3.3.1', 'metadata.version');
   assert(metadata.release_status === 'active', 'metadata.release_status');
   assert(metadata.active === 'true', 'metadata.active');
-  assert(metadata.supersedes === '3.2.0', 'metadata.supersedes');
-  return 'name/description/license/compatibility/metadata valid; active 3.3.0';
+  assert(metadata.supersedes === '3.3.0', 'metadata.supersedes');
+  return 'name/description/license/compatibility/metadata valid; active 3.3.1';
 });
 
 check('SKILL body is within 100 lines and 5 KB', () => {
@@ -379,6 +379,7 @@ check('no package manager or service dependency was added', () => {
 
 check('release changelog preserves release history', () => {
   const changes = read(changelog);
+  assert(changes.includes('## 3.3.1 — 2026-11-14'), '3.3.1 patch entry missing');
   assert(changes.includes('## 3.3.0 — 2026-11-04'), '3.3.0 release entry missing');
   assert(changes.includes('## 3.2.0 — 2026-11-03'), '3.2.0 changelog entry missing');
   assert(changes.includes('`v3.1.0`'), 'rollback tag missing from changelog');
@@ -386,7 +387,7 @@ check('release changelog preserves release history', () => {
   assert(decisions.includes('Promote 3.3.0 to the active release'), 'promotion decision index entry missing');
   assert(decisions.includes('| accepted |'), 'promotion decision status missing');
   assert(decisions.includes('| superseded |'), 'old decision is not marked superseded');
-  return '3.3.0 active; prior decision superseded';
+  return '3.3.1 patch active; prior release decisions preserved';
 });
 
 check('remote main is independently verified', () => {
@@ -417,8 +418,8 @@ check('local Git and rollback tag are consistent', () => {
     main = git(['rev-parse', 'main']);
     origin = git(['rev-parse', 'origin/main']);
     head = git(['rev-parse', 'HEAD']);
-    tagType = git(['cat-file', '-t', 'v3.2.0']);
-    tagCommit = git(['rev-parse', 'v3.2.0^{commit}']);
+    tagType = git(['cat-file', '-t', 'v3.3.0']);
+    tagCommit = git(['rev-parse', 'v3.3.0^{commit}']);
     branch = git(['branch', '--show-current']);
   } catch (error) {
     throw unavailable('local Git check', error);
@@ -426,9 +427,9 @@ check('local Git and rollback tag are consistent', () => {
   assert(main === origin, 'local main ' + main + ' != origin/main ' + origin);
   assert(main === baselineMain || main === head, 'local main is neither rollback baseline nor this release');
   if (branch === 'main') assert(main === head, 'on main but HEAD differs from main');
-  assert(tagType === 'tag', 'v3.2.0 is not an annotated tag');
-  assert(tagCommit === baselineMain, 'v3.2.0 ' + tagCommit + ' != rollback baseline ' + baselineMain);
-  return 'local main=origin/main=' + main.slice(0, 7) + '; v3.2.0=' + tagCommit.slice(0, 7);
+  assert(tagType === 'tag', 'v3.3.0 is not an annotated tag');
+  assert(tagCommit === baselineMain, 'v3.3.0 ' + tagCommit + ' != rollback baseline ' + baselineMain);
+  return 'local main=origin/main=' + main.slice(0, 7) + '; v3.3.0=' + tagCommit.slice(0, 7);
 });
 
 check('README links every capability reference', () => {
@@ -462,6 +463,16 @@ check('search quality contract and five regression scenarios', () => {
     assert(skill.includes(term), 'core rule missing: ' + term);
   }
   assert(!/Nutlope|hallmark|Leonxlnx|taste-skill|pbakaus|impeccable/i.test(skill + search), 'project names hardcoded in runtime rules');
+  assert(search.indexOf('## Search and read budget') < search.indexOf('## Define the question first') && search.includes('## Search and read budget'), 'read budget must precede the search workflow');
+  for (const term of ['same source, version, and range', 'truncation or pagination', 'source changes', 'post-write verification', 'explicit freshness request', 'Opening an already-discovered primary source is not another search round.', 'Exhausting a budget never turns an unknown into a pass']) {
+    assert(search.includes(term), 'missing bounded-retrieval rule: ' + term);
+  }
+  assert(!/never (open or )?(re)?read (it )?again/i.test(search), 'unconditional no-reread rule');
+  const quickStart = read(resolve(repoRoot, 'README.md'));
+  assert(quickStart.includes('## Quick start'), 'missing quick start');
+  assert(quickStart.includes('| Codex |') && quickStart.includes('.agents/skills/network-reuse-protocol/'), 'Codex path missing');
+  assert(quickStart.includes('| Claude Code |') && quickStart.includes('.claude/skills/network-reuse-protocol/'), 'Claude path missing');
+  assert(quickStart.includes('Node.js is only needed for maintainer checks'), 'Node runtime boundary missing');
   const cases = read(resolve(repoRoot, 'tests/test-cases.md'));
   for (const id of ['S1', 'S2', 'S3', 'S4', 'S5']) assert(cases.includes('### ' + id + ' —'), 'missing scenario ' + id);
   return 'static contract only; client behavior is recorded separately';

@@ -5,16 +5,16 @@ license: MIT
 compatibility: Plain Markdown for Agent Skills, AGENTS.md, system prompts, and MCP or A2A orchestrators. No executable dependency; loading may consume context or plan/API usage.
 metadata:
   display_name: "Network Reuse Protocol · 全网复用模式"
-  version: "3.3.0"
+  version: "3.3.1"
   release_status: "active"
   active: "true"
-  supersedes: "3.2.0"
-  updated: "2026-11-04"
+  supersedes: "3.3.0"
+  updated: "2026-11-14"
 ---
 
-# Network Reuse Protocol 3.3.0 · 全网复用模式
+# Network Reuse Protocol 3.3.1 · 全网复用模式
 
-> Active release. Supersedes 3.2.0; rollback: Git tag `v3.2.0`.
+> Active release. Supersedes 3.3.0; rollback: Git tag `v3.3.0`.
 
 Metadata and draft banners are informational, not load controls; confirm the client’s loaded path and version.
 
@@ -33,7 +33,7 @@ Use Quick for known facts; deepen verification for irreversible changes.
 ## Core loop
 
 1. **Frame and check your shelf.** Identify the user’s intended outcome, constraints, risk, and enough evidence to decide. Check [reuse-radar.md](reuse-radar.md), [decisions/](decisions/README.md), [references/](references/README.md), and the current project before searching outside.
-2. **Search the requested source first.** Actually query a user-named platform; if inaccessible, mark it incomplete and label alternatives. Otherwise choose sources by task. Translate the goal into useful industry/English terms, failure modes, solution types, and environment; do not rely on one literal query. Distinguish opened/checked, search-result-only, prior knowledge, and unverified inference. See [references/global-search.md](references/global-search.md).
+2. **Search the requested source first.** Query a named platform or mark access incomplete; label substitutes. Translate the goal into useful terms, failure modes, solution types, and environment. Reuse complete reads of unchanged sources; justify partial, changed, freshness, or post-write checks. Distinguish checked sources, snippets, prior knowledge, and inference. See [references/global-search.md](references/global-search.md).
 3. **Verify, gate, score.** Separate observation, source claims, and inference. Apply the hard gates below, then score fit, validation, maintenance, cost, and portability. See [references/evidence-and-scoring.md](references/evidence-and-scoring.md).
 4. **Check omissions, then decide.** Keep 1–3 focused candidates: do they solve the core problem, omit a closer peer, fit this environment, duplicate installed tools, and have checkable evidence? Enough evidence: stop. Otherwise at most one targeted follow-up; state gaps. Choose `REUSE`, `COMPOSE`, `ADAPT`, or `BUILD`; compare adoption and build cost. Research never authorizes a purchase.
 5. **Check the shelf before installing.** Check existing models, skills, plugins, MCP servers, projects, APIs, and tools for the same capability. Prefer free, local, owned, running options. See [references/resource-inventory.md](references/resource-inventory.md) and [references/cost-control.md](references/cost-control.md).

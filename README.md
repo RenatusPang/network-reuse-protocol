@@ -1,22 +1,44 @@
-# Network Reuse Protocol 3.3.0 · 全网复用模式
+# Network Reuse Protocol 3.3.1 · 全网复用模式
 
-**Active release.** 3.3.0 supersedes 3.2.0 after the owner authorized publication and synchronization. The protocol is a portable work protocol for choosing proven solutions before building. It keeps the compact 3.1.0 reuse rule as the default for simple work and adds bounded discipline for high-risk, multi-agent, cost-sensitive, and long-lived work.
+**Active release.** 3.3.1 is an owner-authorized maintenance patch over 3.3.0, following a direct desktop Gemini review. The protocol is a portable work protocol for choosing proven solutions before building. It keeps the compact 3.1.0 reuse rule as the default for simple work and adds bounded discipline for high-risk, multi-agent, cost-sensitive, and long-lived work.
 
 The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter and has no executable runtime dependency. Loading its rules and optional references may consume context, plan quota, or API usage. No comparable measurement exists, so no savings percentage is claimed.
+
+## Quick start
+
+1. Download the complete tagged release, unpack it, and name the folder `network-reuse-protocol`. Keep its supporting files; `SKILL.md` must be directly inside that folder. No new model, MCP server, API key, or paid service is required by this package.
+2. Use the directory supported by your client; choose one scope, not duplicate copies:
+
+| Client | Current project | All projects for this user |
+| --- | --- | --- |
+| Codex | `.agents/skills/network-reuse-protocol/` | `~/.agents/skills/network-reuse-protocol/` |
+| Claude Code | `.claude/skills/network-reuse-protocol/` | `~/.claude/skills/network-reuse-protocol/` |
+
+On Windows, `~` means your user home directory. Inspect an existing installation or shared pointer before copying: do not rename another client's Skill, overwrite local records, or silently replace a customized copy. Older or customized clients may use a different path; follow the installed client's supported layout.
+
+3. In a new session, explicitly ask the agent to use `network-reuse-protocol` and report the path and version it actually read. Other clients can use their supported Skill import or read [SKILL.md](SKILL.md) with accessible references. File readability is not proof of automatic discovery or enforcement.
+
+**Node.js is only needed for maintainer checks**, not for reading the protocol. Maintainers can run `node tests/check-protocol.mjs` from a Git checkout or `node tests/check-package.mjs` from a complete package directory named `network-reuse-protocol`. Do not install Node solely to use this Markdown Skill.
+
+Directory references, checked 2026-11-14: [OpenAI local Skill locations](https://developers.openai.com/codex/skills), [Claude Code Skill locations](https://code.claude.com/docs/en/skills), and the [Agent Skills package specification](https://agentskills.io/specification). These document layout, not a claim that every client was tested here.
 
 ## Status
 
 | Item | State |
 | --- | --- |
-| Version | 3.3.0 |
+| Version | 3.3.1 |
 | Channel | active |
-| Supersedes | 3.2.0 |
-| Rollback baseline | annotated Git tag `v3.2.0` at `da1a716`; earlier `v3.1.0` also retained |
+| Supersedes | 3.3.0 |
+| Rollback baseline | annotated Git tag `v3.3.0` at `65319b4`; earlier tags retained |
 | License | MIT |
-| Release tag | `v3.3.0` |
+| Release tag | `v3.3.1` |
 | Production systems touched | none |
 
-## What changes from 3.2.0
+## What changes in 3.3.1
+
+This patch adds the client-specific quick start and moves bounded retrieval rules ahead of the search workflow. Complete unchanged reads are reused; partial reads, changed sources, post-write checks, and explicit freshness requests retain narrow exceptions. Source opening is distinct from another search round. No measured savings or new all-client compatibility claim is added.
+
+### Inherited 3.3.0 improvements
 
 3.2.0 already encouraged problem-based search. 3.3.0 makes a user-named source a required actual retrieval or an explicit incomplete check; translates the goal into useful professional terms; checks for closer candidates before stopping; and distinguishes opened sources, search-only leads, prior knowledge, and inference. A general search is not a silent substitute.
 
@@ -74,7 +96,7 @@ Historical 3.2.0 evidence: the four short behavior scenarios were run against th
 
 ## Rollback
 
-The rollback baseline is annotated tag `v3.2.0` at `da1a716`. The earlier 3.1.0 release remains at `v3.1.0` (`705dacf`). Restore the verified pre-3.3.0 Codex file snapshot; remove only files listed as newly added by that installation. Keep local records and other clients intact. To withdraw the remote release, revert the promotion merge in a new commit; never reset shared history or move published tags.
+The rollback baseline is annotated tag `v3.3.0` at `65319b4`; `v3.2.0` is also retained. The earlier 3.1.0 release remains at `v3.1.0` (`705dacf`). Restore a verified pre-update local snapshot; remove only files listed as newly added by that installation. Keep local records and other clients intact. To withdraw the remote release, revert the promotion merge in a new commit; never reset shared history or move published tags.
 
 ## License
 

@@ -1,6 +1,16 @@
 # Global search
 
-> **Active 3.3.0 guidance.** Search is a means to a decision, not a deliverable.
+> **Active 3.3.1 guidance.** Search is a means to a decision, not a deliverable.
+
+## Search and read budget
+
+Use existing evidence before another tool call. These work limits do not certify correctness.
+
+- **Reuse complete results.** For the same source, version, and range already retrieved successfully and completely, use the fetched content. A failed request or incomplete excerpt is not a complete cached result. Use version/hash and range metadata already available; do not fetch again merely to build a cache key.
+- **Targeted rereads.** Allow truncation or pagination, source changes, post-write verification, or an explicit freshness request. Note the concrete reason in the existing task record or tool rationale and read only the needed range or changed evidence. If a current check is required and freshness cannot be established, say so and perform that bounded check; do not silently treat an old copy as current.
+- **No repeated queries without new information.** Do not repeat identical or near-identical searches just to look thorough. For weak results, change the vocabulary or angle in the one targeted follow-up. An access denial is a blocker, not permission to loop; at most one bounded retry is appropriate for a plausibly transient failure with a stated reason.
+- **Smallest mode.** Quick uses no external search for stable, already-supported facts; an explicit or materially necessary current verification remains allowed. Standard uses one focused initial round and at most one targeted follow-up for a decision-changing gap. High-risk adds only checks for named material risks, not a fixed exhaustive matrix. Stop and disclose unresolved critical gaps rather than act on them.
+- **Opening an already-discovered primary source is not another search round.** Fetch decisive evidence for the existing shortlist; this exception is not a reason to fetch every search hit. Exhausting a budget never turns an unknown into a pass. Stop when the task's acceptance criteria are met; do not add a new verification stage without a concrete failure or changed requirement.
 
 ## Define the question first
 
@@ -58,6 +68,8 @@ For a search task, translate the original goal into useful professional and Engl
 Do not assume the first product name is the category. Search the capability, then map products to it.
 
 ## Source-specific checks
+
+Inspect only the facts that can change the decision; these lists are not mandatory audits of every candidate.
 
 ### GitHub
 
@@ -144,15 +156,7 @@ After the omission check, stop when any of these is true:
 - The remaining uncertainty is explicitly recorded and the next step is a bounded test.
 - The time or budget cap is reached; report the gap instead of looping.
 
-Suggested caps, adjustable by the owner:
-
-| Mode | Candidates | Primary sources | Search rounds | Wall-clock guide |
-| --- | --- | --- | --- | --- |
-| Quick | 0–1 | 0–1 | 0–1 | minutes |
-| Standard | 1–3 | 1–2 | initial + at most one targeted follow-up if needed | about 30 minutes |
-| High-risk | 1–3 plus counter-example | 2+ | 2–3 | about 2 hours |
-
-The caps are not performance targets. They exist to prevent research from replacing delivery.
+Mode limits are defined at the top of this file. They are ceilings, not targets; do not spend the remaining budget after the decision is supported.
 
 ## Search record
 

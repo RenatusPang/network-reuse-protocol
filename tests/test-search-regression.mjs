@@ -16,6 +16,10 @@ const cases = [
   ['standing authorization', 'SKILL.md', 'remains valid until revoked', 'expires after one task'],
   ['Quick path', 'SKILL.md', 'no formal search', 'mandatory global search'],
   ['release stays active', 'SKILL.md', 'release_status: "active"', 'release_status: "draft"'],
+  ['partial-read exception', 'references/global-search.md', 'truncation or pagination', 'all later reads forbidden'],
+  ['freshness exception', 'references/global-search.md', 'explicit freshness request', 'ignore requests for current evidence'],
+  ['source-opening boundary', 'references/global-search.md', 'Opening an already-discovered primary source is not another search round.', 'Opening any source consumes the only search round.'],
+  ['no budget-based pass', 'references/global-search.md', 'Exhausting a budget never turns an unknown into a pass', 'Exhausting a budget means all checks pass'],
 ];
 let passed = 0;
 try {

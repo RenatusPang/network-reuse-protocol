@@ -2,6 +2,16 @@
 
 All notable changes to Network Reuse Protocol are recorded here. A changelog entry records the change; it does not by itself prove installation or business effect.
 
+## 3.3.1 — 2026-11-14
+
+Owner-authorized maintenance patch following a direct discussion with desktop Gemini. Rollback baseline: `v3.3.0` (`65319b4`).
+
+- Add a concise quick start with distinct Codex and Claude Code directories; Node remains maintainer-only.
+- Front-load retrieval reuse and bounded follow-ups without banning necessary partial, changed, post-write, or freshness reads.
+- Keep source opening distinct from a new search round and stop after agreed acceptance, not after an ever-growing test checklist.
+- Add targeted static and mutation regressions; do not reinterpret historical behavior failures as passes or claim measured Token savings.
+- Preserve private client extensions, shared pointers, old local checkouts, and unrelated configuration; do not publish private files.
+
 ## 3.3.0 — 2026-11-04
 
 Owner-authorized release of candidate `26db7d8`. Published as `v3.3.0`; rollback baseline `v3.2.0` (`da1a716`). Synchronize the complete package to the current Codex Skill without changing DSH or global configuration. The recorded duplicate-retrieval failure and X-access skip remain disclosed; promotion does not turn them into passes.
