@@ -16,7 +16,7 @@ metadata:
 
 > Active release. Supersedes 3.3.0; rollback: Git tag `v3.3.0`.
 
-Metadata and draft banners are informational, not load controls; confirm the client’s loaded path and version.
+Metadata is informational, not a load control; confirm the loaded path and version.
 
 **Reuse proven solutions before building; stop research when evidence supports the decision.**
 
@@ -35,7 +35,7 @@ Use Quick for known facts; deepen verification for irreversible changes.
 1. **Frame and check your shelf.** Identify the user’s intended outcome, constraints, risk, and enough evidence to decide. Check [reuse-radar.md](reuse-radar.md), [decisions/](decisions/README.md), [references/](references/README.md), and the current project before searching outside.
 2. **Search the requested source first.** Query a named platform or mark access incomplete; label substitutes. Translate the goal into useful terms, failure modes, solution types, and environment. Reuse complete reads of unchanged sources; justify partial, changed, freshness, or post-write checks. Distinguish checked sources, snippets, prior knowledge, and inference. See [references/global-search.md](references/global-search.md).
 3. **Verify, gate, score.** Separate observation, source claims, and inference. Apply the hard gates below, then score fit, validation, maintenance, cost, and portability. See [references/evidence-and-scoring.md](references/evidence-and-scoring.md).
-4. **Check omissions, then decide.** Keep 1–3 focused candidates: do they solve the core problem, omit a closer peer, fit this environment, duplicate installed tools, and have checkable evidence? Enough evidence: stop. Otherwise at most one targeted follow-up; state gaps. Choose `REUSE`, `COMPOSE`, `ADAPT`, or `BUILD`; compare adoption and build cost. Research never authorizes a purchase.
+4. **Check omissions, then decide.** Keep 1–3 focused candidates: do they solve the core problem, omit a closer peer, fit this environment, duplicate installed tools, and have checkable evidence? Enough evidence: stop. Otherwise at most one targeted follow-up; state gaps. Choose `REUSE`, `COMPOSE`, `ADAPT`, or `BUILD`; compare adoption and build cost. Research never authorizes a purchase. One failed verification: stop local patching, switch to network-reuse mode first, then revisit architecture, data flow, dependencies, and failure boundaries.
 5. **Check the shelf before installing.** Check existing models, skills, plugins, MCP servers, projects, APIs, and tools for the same capability. Prefer free, local, owned, running options. See [references/resource-inventory.md](references/resource-inventory.md) and [references/cost-control.md](references/cost-control.md).
 6. **Execute, hand off, and keep permissions.** One owner writes shared state. Use the handoff schema when work crosses agents. Research is read-only. Explicit ongoing authorization within a defined scope remains valid until revoked; while unchanged, do not ask again or invent expiry or quantity limits. Reconfirm on scope growth, new fees, or material risk. See [references/multi-agent-handoff.md](references/multi-agent-handoff.md) and [references/security-governance.md](references/security-governance.md).
 7. **Validate by level and retain only durable knowledge.** Separate L1 file/code, L2 runtime/interface, L3 real business flow, and L4 stability. Code passing is not business success. Keep durable decisions with provenance and review dates. See [references/validation.md](references/validation.md) and [references/knowledge-retention.md](references/knowledge-retention.md).
@@ -58,7 +58,7 @@ Reject a candidate if any gate fails:
 - Never put credentials in prompts, examples, inventory files, or logs.
 - Never bypass CAPTCHAs, rate limits, access controls, or account ownership checks.
 - Back up state, define rollback, and use least privilege before a sensitive change.
-- No new paid-service dependency; loading consumes context and may consume plan/API usage. Record only measured savings; label estimates; a token count is not a currency amount.
+- No new paid-service dependency. Record only measured savings; label estimates.
 - When project rules and this protocol conflict, the stricter rule wins.
 
 ## Delivery receipt

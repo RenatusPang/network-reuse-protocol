@@ -1,4 +1,4 @@
-# Compatibility — Network Reuse Protocol 3.3.0
+# Compatibility — Network Reuse Protocol 3.3.1
 
 > **Active release.** 3.3.0 changes search policy only; the 3.2.0 mappings below are retained, not freshly re-researched. Standards are optional adapters. No standard, package, server, or runtime is required to use this protocol. Loading it still consumes context and may consume plan or API usage.
 

@@ -13,6 +13,7 @@ The canonical skill is [SKILL.md](SKILL.md). It uses Agent Skills frontmatter an
 | --- | --- | --- |
 | Codex | `.agents/skills/network-reuse-protocol/` | `~/.agents/skills/network-reuse-protocol/` |
 | Claude Code | `.claude/skills/network-reuse-protocol/` | `~/.claude/skills/network-reuse-protocol/` |
+| Muse | `~/workspace/custom-skills/network-reuse-protocol/` | `~/workspace/custom-skills/network-reuse-protocol/` |
 
 On Windows, `~` means your user home directory. Inspect an existing installation or shared pointer before copying: do not rename another client's Skill, overwrite local records, or silently replace a customized copy. Older or customized clients may use a different path; follow the installed client's supported layout.
 
